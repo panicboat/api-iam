@@ -18,7 +18,7 @@ module Policies
     end
 
     test 'Create Policy Statements' do
-      params = default_params.merge({ statements: [effect: 'allow', actions: ['iam:List*'], resources: ['prn:panicboat:platform:iam:service/bc2edb53-551c-4bab-af24-ec1b63b89a3b']] })
+      params = default_params.merge({ statements: [{ effect: 'allow', actions: ['iam:List*'], resources: ['prn:panicboat:platform:iam:service/bc2edb53-551c-4bab-af24-ec1b63b89a3b'] }] })
       result = Operation::Create.call(params: params)
       result[:model].statements do |statement|
         assert_equal statement.effect 'allow'

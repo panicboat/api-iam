@@ -9,7 +9,7 @@ module Permissions::Operation
     def model(ctx, **)
       contract = contract(ctx)
       data = []
-      policies = ::PermissionService.new(ctx[:current_user]).all
+      policies = Concerns::Show.new(contract(ctx[:current_user]).model).all
       ::Statement.joins(:policy).where({ policies: { id: policies.pluck(:id) } }).each do |statement|
         ::MapStatementAction.where({ statement_id: statement.id }).find_each do |map_statement_action|
           data.push(actions(contract.id, statement, map_statement_action))
