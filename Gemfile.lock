@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/panicboat/api-engine
-  revision: 4402d5b27310def17a8ba6182e5cd81a01cc52f8
+  revision: f2d77ed5cce3b88a741ccfbfef4379e1866efcd9
   specs:
     panicboat (1.0.0)
       rails (~> 6.0.3, >= 6.0.3.2)
@@ -182,7 +182,7 @@ GEM
       disposable (>= 0.4.2, < 0.5.0)
       representable (>= 2.4.0, < 3.1.0)
       uber (< 0.2.0)
-    reform-rails (0.2.1)
+    reform-rails (0.2.0)
       activemodel (>= 5.0)
       reform (>= 2.3.1, < 3.0.0)
     regexp_parser (1.8.2)
