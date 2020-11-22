@@ -1,6 +1,6 @@
 module Actions::Contract
-  class Show < Abstract::Contract
-    class Show < Abstract::Contract
+  class Show < Panicboat::Contract
+    class Show < Panicboat::Contract
       property  :id
       property  :service_id
 

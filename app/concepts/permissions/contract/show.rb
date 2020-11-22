@@ -1,5 +1,5 @@
 module Permissions::Contract
-  class Show < Abstract::Contract
+  class Show < Panicboat::Contract
     property  :id
 
     validates :id, presence: true

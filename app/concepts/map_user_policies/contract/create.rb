@@ -1,5 +1,5 @@
 module MapUserPolicies::Contract
-  class Create < Abstract::Contract
+  class Create < Panicboat::Contract
     property  :user_id
     property  :policy_id
 

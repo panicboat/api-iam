@@ -1,5 +1,5 @@
 module Permissions::Operation
-  class Show < Abstract::Operation
+  class Show < Panicboat::Operation
     step Model(::OpenStruct)
     step Contract::Build(constant: Permissions::Contract::Show)
     step Contract::Validate()
@@ -9,7 +9,7 @@ module Permissions::Operation
     def model(ctx, **)
       contract = contract(ctx)
       data = []
-      policies = Concerns::Show.new(contract(ctx[:current_user]).model).all
+      policies = Concerns::Show.new(ctx[:current_user].present? ? contract(ctx[:current_user]).model : nil).all
       ::Statement.joins(:policy).where({ policies: { id: policies.pluck(:id) } }).each do |statement|
         ::MapStatementAction.where({ statement_id: statement.id }).find_each do |map_statement_action|
           data.push(actions(contract.id, statement, map_statement_action))

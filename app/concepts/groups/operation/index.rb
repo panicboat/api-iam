@@ -1,5 +1,5 @@
 module Groups::Operation
-  class Index < Abstract::Operation
+  class Index < Panicboat::Operation
     step Model(::Group)
     step Contract::Build(constant: Groups::Contract::Index)
     step Contract::Validate()

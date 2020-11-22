@@ -1,5 +1,5 @@
 module Services::Operation
-  class Create < Abstract::Operation
+  class Create < Panicboat::Operation
     step Model(::Service, :new)
     step Contract::Build(constant: Services::Contract::Create)
     step Contract::Validate()

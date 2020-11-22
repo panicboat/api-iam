@@ -1,5 +1,5 @@
 module Actions::Contract
-  class Update < Abstract::Contract
+  class Update < Panicboat::Contract
     property  :id
     property  :service_id
     property  :name

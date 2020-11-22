@@ -1,5 +1,5 @@
 module Groups::Contract
-  class Create < Abstract::Contract
+  class Create < Panicboat::Contract
     property  :name
     property  :description
 

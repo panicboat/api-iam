@@ -1,5 +1,5 @@
 module MapGroupUsers::Representer
-  class Index < Abstract::Representer
+  class Index < Panicboat::Representer
     collection :MapGroupUsers, decorator: Show
   end
 end

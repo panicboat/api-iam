@@ -1,5 +1,5 @@
 module MapGroupRoles::Representer
-  class Show < Abstract::Representer
+  class Show < Panicboat::Representer
     property  :id
     property  :group_id
     property  :role_id

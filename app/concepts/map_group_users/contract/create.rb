@@ -1,5 +1,5 @@
 module MapGroupUsers::Contract
-  class Create < Abstract::Contract
+  class Create < Panicboat::Contract
     property  :group_id
     property  :user_id
 

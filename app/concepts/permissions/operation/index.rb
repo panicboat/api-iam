@@ -1,5 +1,5 @@
 module Permissions::Operation
-  class Index < Abstract::Operation
+  class Index < Panicboat::Operation
     step Model(::OpenStruct)
     step Contract::Build(constant: Permissions::Contract::Index)
     step Contract::Validate()
@@ -9,7 +9,7 @@ module Permissions::Operation
     def model(ctx, **)
       contract = contract(ctx)
       data = []
-      policies = Concerns::Show.new(contract(ctx[:current_user]).model).all
+      policies = Concerns::Show.new(ctx[:current_user].present? ? contract(ctx[:current_user]).model : nil).all
       statement_ids = ::Statement.joins(:policy).where({ policies: { id: policies.pluck(:id) }, effect: contract.effect }).pluck(:id)
       ::MapStatementAction.where({ statement_id: statement_ids }).find_each do |map_statement_action|
         data.push(actions(map_statement_action))

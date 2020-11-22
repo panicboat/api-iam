@@ -1,4 +1,4 @@
 module Policies::Contract
-  class Index < Abstract::Contract
+  class Index < Panicboat::Contract
   end
 end

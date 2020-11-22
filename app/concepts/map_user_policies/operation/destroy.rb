@@ -1,5 +1,5 @@
 module MapUserPolicies::Operation
-  class Destroy < Abstract::Operation
+  class Destroy < Panicboat::Operation
     step Model(::MapUserPolicy)
     step Contract::Build(constant: MapUserPolicies::Contract::Destroy)
     step Contract::Validate()

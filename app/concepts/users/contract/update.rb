@@ -1,5 +1,5 @@
 module Users::Contract
-  class Update < Abstract::Contract
+  class Update < Panicboat::Contract
     property  :id
     property  :name
 

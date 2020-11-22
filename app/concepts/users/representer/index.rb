@@ -1,5 +1,5 @@
 module Users::Representer
-  class Index < Abstract::Representer
+  class Index < Panicboat::Representer
     collection :Users, decorator: Show
   end
 end

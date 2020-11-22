@@ -1,5 +1,5 @@
 module Policies::Contract
-  class Create < Abstract::Contract
+  class Create < Panicboat::Contract
     property  :name
     property  :description
     property  :inline,      default: false

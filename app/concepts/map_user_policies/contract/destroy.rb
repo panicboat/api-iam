@@ -1,5 +1,5 @@
 module MapUserPolicies::Contract
-  class Destroy < Abstract::Contract
+  class Destroy < Panicboat::Contract
     property  :user_id
     property  :policy_id
 

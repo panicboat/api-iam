@@ -1,5 +1,5 @@
 module MapUserPolicies::Operation
-  class Index < Abstract::Operation
+  class Index < Panicboat::Operation
     step Model(::MapUserPolicy)
     step Contract::Build(constant: MapUserPolicies::Contract::Index)
     step Contract::Validate()

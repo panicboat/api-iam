@@ -1,5 +1,5 @@
 module Groups::Representer
-  class Show < Abstract::Representer
+  class Show < Panicboat::Representer
     property :id
     property :name
     property :description

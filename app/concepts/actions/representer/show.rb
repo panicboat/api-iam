@@ -1,5 +1,5 @@
 module Actions::Representer
-  class Show < Abstract::Representer
+  class Show < Panicboat::Representer
     property :id
     property :name
     property :service_id

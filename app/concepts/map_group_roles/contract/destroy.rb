@@ -1,5 +1,5 @@
 module MapGroupRoles::Contract
-  class Destroy < Abstract::Contract
+  class Destroy < Panicboat::Contract
     property  :group_id
     property  :role_id
 

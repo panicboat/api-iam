@@ -1,5 +1,5 @@
 module Roles::Operation
-  class Create < Abstract::Operation
+  class Create < Panicboat::Operation
     step Model(::Role, :new)
     step Contract::Build(constant: Roles::Contract::Create)
     step Contract::Validate()

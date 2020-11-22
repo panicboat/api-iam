@@ -1,5 +1,5 @@
 module MapRolePolicies::Contract
-  class Create < Abstract::Contract
+  class Create < Panicboat::Contract
     property  :role_id
     property  :policy_id
 

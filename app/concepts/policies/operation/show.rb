@@ -1,5 +1,5 @@
 module Policies::Operation
-  class Show < Abstract::Operation
+  class Show < Panicboat::Operation
     step Model(::Policy, :find_by)
     step Contract::Build(constant: Policies::Contract::Show)
     step Contract::Validate()

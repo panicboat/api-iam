@@ -1,5 +1,5 @@
 module Policies::Operation
-  class Create < Abstract::Operation
+  class Create < Panicboat::Operation
     step Model(::Policy, :new)
     step Contract::Build(constant: Policies::Contract::Create)
     step Contract::Validate()

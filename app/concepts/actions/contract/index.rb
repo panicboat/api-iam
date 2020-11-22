@@ -1,5 +1,5 @@
 module Actions::Contract
-  class Index < Abstract::Contract
+  class Index < Panicboat::Contract
     property  :service_id
 
     validates :service_id, presence: true, format: { with: FORMAT_UUID }

@@ -1,5 +1,5 @@
 module Groups::Representer
-  class Index < Abstract::Representer
+  class Index < Panicboat::Representer
     collection :Groups, decorator: Show
   end
 end

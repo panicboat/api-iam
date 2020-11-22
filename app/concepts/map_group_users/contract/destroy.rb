@@ -1,5 +1,5 @@
 module MapGroupUsers::Contract
-  class Destroy < Abstract::Contract
+  class Destroy < Panicboat::Contract
     property  :group_id
     property  :user_id
 

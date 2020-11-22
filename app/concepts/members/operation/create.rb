@@ -1,5 +1,5 @@
 module Members::Operation
-  class Create < Abstract::Operation
+  class Create < Panicboat::Operation
     step Model(::Member, :new)
     step Contract::Build(constant: Members::Contract::Create)
     step Contract::Validate()

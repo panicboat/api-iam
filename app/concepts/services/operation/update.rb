@@ -1,5 +1,5 @@
 module Services::Operation
-  class Update < Abstract::Operation
+  class Update < Panicboat::Operation
     step Model(::Service, :find_by)
     step Contract::Build(constant: Services::Contract::Update)
     step Contract::Validate()
