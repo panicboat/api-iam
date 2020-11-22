@@ -1,5 +1,5 @@
 module Permissions::Representer
-  class Index < Panicboat::Representer
+  class Index < Abstract::Representer
     collection :Permissions
   end
 end

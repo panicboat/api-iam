@@ -1,5 +1,5 @@
 module MapUserPolicies::Representer
-  class Show < Panicboat::Representer
+  class Show < Abstract::Representer
     property  :id
     property  :user_id
     property  :policy_id

@@ -1,5 +1,5 @@
 module MapRolePolicies::Representer
-  class Show < Panicboat::Representer
+  class Show < Abstract::Representer
     property  :id
     property  :role_id
     property  :policy_id

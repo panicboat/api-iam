@@ -1,5 +1,5 @@
 module Health::Representer
-  class Index < Panicboat::Representer
+  class Index < Abstract::Representer
     property :status
   end
 end

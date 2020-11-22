@@ -1,5 +1,5 @@
 module MapGroupPolicies::Representer
-  class Show < Panicboat::Representer
+  class Show < Abstract::Representer
     property  :id
     property  :group_id
     property  :policy_id

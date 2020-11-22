@@ -1,5 +1,5 @@
 module MapUserRoles::Representer
-  class Show < Panicboat::Representer
+  class Show < Abstract::Representer
     property  :id
     property  :user_id
     property  :role_id

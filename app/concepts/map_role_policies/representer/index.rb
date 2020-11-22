@@ -1,5 +1,5 @@
 module MapRolePolicies::Representer
-  class Index < Panicboat::Representer
+  class Index < Abstract::Representer
     collection :MapRolePolicies, decorator: Show
   end
 end

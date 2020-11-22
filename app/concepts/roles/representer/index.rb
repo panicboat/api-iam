@@ -1,5 +1,5 @@
 module Roles::Representer
-  class Index < Panicboat::Representer
+  class Index < Abstract::Representer
     collection :Roles, decorator: Show
   end
 end

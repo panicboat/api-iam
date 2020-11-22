@@ -1,5 +1,5 @@
 module Members::Representer
-  class Show < Panicboat::Representer
+  class Show < Abstract::Representer
     property :id
     property :email
     property :name

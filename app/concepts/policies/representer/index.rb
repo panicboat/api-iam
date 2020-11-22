@@ -1,5 +1,5 @@
 module Policies::Representer
-  class Index < Panicboat::Representer
+  class Index < Abstract::Representer
     collection :Policies do
       property :id
       property :name

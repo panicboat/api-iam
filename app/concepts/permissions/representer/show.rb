@@ -1,5 +1,5 @@
 module Permissions::Representer
-  class Show < Panicboat::Representer
+  class Show < Abstract::Representer
     collection :Permissions do
       property    :effect
       collection  :prn
