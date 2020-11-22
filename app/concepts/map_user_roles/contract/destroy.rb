@@ -1,5 +1,5 @@
 module MapUserRoles::Contract
-  class Destroy < Panicboat::Contract
+  class Destroy < Abstract::Contract
     property  :user_id
     property  :role_id
 

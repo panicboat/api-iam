@@ -1,4 +1,4 @@
 module Groups::Contract
-  class Index < Panicboat::Contract
+  class Index < Abstract::Contract
   end
 end

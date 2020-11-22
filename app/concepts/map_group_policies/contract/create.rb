@@ -1,5 +1,5 @@
 module MapGroupPolicies::Contract
-  class Create < Panicboat::Contract
+  class Create < Abstract::Contract
     property  :group_id
     property  :policy_id
 

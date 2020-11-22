@@ -1,5 +1,5 @@
 module MapGroupRoles::Contract
-  class Create < Panicboat::Contract
+  class Create < Abstract::Contract
     property  :group_id
     property  :role_id
 

@@ -1,5 +1,5 @@
 module Services::Contract
-  class Create < Panicboat::Contract
+  class Create < Abstract::Contract
     property  :name
     property  :description
 

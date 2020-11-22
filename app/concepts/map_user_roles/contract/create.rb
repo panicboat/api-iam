@@ -1,5 +1,5 @@
 module MapUserRoles::Contract
-  class Create < Panicboat::Contract
+  class Create < Abstract::Contract
     property  :user_id
     property  :role_id
 

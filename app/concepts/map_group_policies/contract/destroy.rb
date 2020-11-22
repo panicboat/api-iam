@@ -1,5 +1,5 @@
 module MapGroupPolicies::Contract
-  class Destroy < Panicboat::Contract
+  class Destroy < Abstract::Contract
     property  :group_id
     property  :policy_id
 

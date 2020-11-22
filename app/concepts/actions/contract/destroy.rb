@@ -1,5 +1,5 @@
 module Actions::Contract
-  class Destroy < Panicboat::Contract
+  class Destroy < Abstract::Contract
     property  :id
     property  :service_id
 

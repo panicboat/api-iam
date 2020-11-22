@@ -1,5 +1,5 @@
 module Roles::Contract
-  class Update < Panicboat::Contract
+  class Update < Abstract::Contract
     property  :id
     property  :name
     property  :description

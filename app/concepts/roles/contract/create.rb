@@ -1,5 +1,5 @@
 module Roles::Contract
-  class Create < Panicboat::Contract
+  class Create < Abstract::Contract
     property  :name
     property  :description
     property  :owner,       default: 'user'

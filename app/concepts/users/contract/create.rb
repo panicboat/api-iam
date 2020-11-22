@@ -1,5 +1,5 @@
 module Users::Contract
-  class Create < Panicboat::Contract
+  class Create < Abstract::Contract
     property  :email
     property  :name
 
