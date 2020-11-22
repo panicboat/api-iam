@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/panicboat/api-engine
-  revision: 28dbcca03bb01a95d793af489c7a08dfd36d7506
+  revision: 4402d5b27310def17a8ba6182e5cd81a01cc52f8
   specs:
     panicboat (1.0.0)
       rails (~> 6.0.3, >= 6.0.3.2)
@@ -93,7 +93,7 @@ GEM
       uber (< 0.2.0)
     docile (1.3.2)
     e2mmap (0.1.0)
-    erubi (1.9.0)
+    erubi (1.10.0)
     faraday (1.1.0)
       multipart-post (>= 1.2, < 3)
       ruby2_keywords
@@ -111,7 +111,7 @@ GEM
       aes_key_wrap
       bindata
     jwt (2.2.2)
-    listen (3.3.0)
+    listen (3.3.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
     loofah (2.7.0)
@@ -182,7 +182,7 @@ GEM
       disposable (>= 0.4.2, < 0.5.0)
       representable (>= 2.4.0, < 3.1.0)
       uber (< 0.2.0)
-    reform-rails (0.2.0)
+    reform-rails (0.2.1)
       activemodel (>= 5.0)
       reform (>= 2.3.1, < 3.0.0)
     regexp_parser (1.8.2)
