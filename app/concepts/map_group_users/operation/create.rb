@@ -1,5 +1,5 @@
 module MapGroupUsers::Operation
-  class Create < Panicboat::Operation
+  class Create < Abstract::Operation
     step Model(::MapGroupUser, :new)
     step Contract::Build(constant: MapGroupUsers::Contract::Create)
     step Contract::Validate()

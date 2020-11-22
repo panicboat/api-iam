@@ -1,5 +1,5 @@
 module Roles::Operation
-  class Index < Panicboat::Operation
+  class Index < Abstract::Operation
     step Model(::Role)
     step Contract::Build(constant: Roles::Contract::Index)
     step Contract::Validate()

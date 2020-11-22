@@ -1,5 +1,5 @@
 module Health::Operation
-  class Index < Panicboat::Operation
+  class Index < Abstract::Operation
     step Model(OpenStruct, :new)
     step Contract::Build(constant: Health::Contract::Index)
     step Contract::Validate()

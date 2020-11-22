@@ -1,5 +1,5 @@
 module Permissions::Operation
-  class Show < Panicboat::Operation
+  class Show < Abstract::Operation
     step Model(::OpenStruct)
     step Contract::Build(constant: Permissions::Contract::Show)
     step Contract::Validate()

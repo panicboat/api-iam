@@ -1,5 +1,5 @@
 module Permissions::Operation
-  class Index < Panicboat::Operation
+  class Index < Abstract::Operation
     step Model(::OpenStruct)
     step Contract::Build(constant: Permissions::Contract::Index)
     step Contract::Validate()

@@ -1,5 +1,5 @@
 module MapGroupRoles::Operation
-  class Index < Panicboat::Operation
+  class Index < Abstract::Operation
     step Model(::MapGroupRole)
     step Contract::Build(constant: MapGroupRoles::Contract::Index)
     step Contract::Validate()

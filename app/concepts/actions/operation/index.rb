@@ -1,5 +1,5 @@
 module Actions::Operation
-  class Index < Panicboat::Operation
+  class Index < Abstract::Operation
     step Model(::Action)
     step Contract::Build(constant: Actions::Contract::Index)
     step Contract::Validate()

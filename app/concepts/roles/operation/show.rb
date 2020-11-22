@@ -1,5 +1,5 @@
 module Roles::Operation
-  class Show < Panicboat::Operation
+  class Show < Abstract::Operation
     step Model(::Role, :find_by)
     step Contract::Build(constant: Roles::Contract::Show)
     step Contract::Validate()

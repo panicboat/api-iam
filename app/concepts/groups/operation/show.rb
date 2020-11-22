@@ -1,5 +1,5 @@
 module Groups::Operation
-  class Show < Panicboat::Operation
+  class Show < Abstract::Operation
     step Model(::Group, :find_by)
     step Contract::Build(constant: Groups::Contract::Show)
     step Contract::Validate()

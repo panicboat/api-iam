@@ -1,5 +1,5 @@
 module Groups::Operation
-  class Create < Panicboat::Operation
+  class Create < Abstract::Operation
     step Model(::Group, :new)
     step Contract::Build(constant: Groups::Contract::Create)
     step Contract::Validate()

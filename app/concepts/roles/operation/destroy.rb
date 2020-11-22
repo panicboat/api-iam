@@ -1,5 +1,5 @@
 module Roles::Operation
-  class Destroy < Panicboat::Operation
+  class Destroy < Abstract::Operation
     step Model(::Role, :find_by)
     step Contract::Build(constant: Roles::Contract::Destroy)
     step Contract::Validate()

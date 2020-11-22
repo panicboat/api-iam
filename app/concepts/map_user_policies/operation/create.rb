@@ -1,5 +1,5 @@
 module MapUserPolicies::Operation
-  class Create < Panicboat::Operation
+  class Create < Abstract::Operation
     step Model(::MapUserPolicy, :new)
     step Contract::Build(constant: MapUserPolicies::Contract::Create)
     step Contract::Validate()
