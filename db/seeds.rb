@@ -6,7 +6,10 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-Users::Operation::Create.call(params: { email: 'admin@panicboat.net', name: 'Administrator' })
+user = Users::Operation::Create.call(params: { email: 'admin@panicboat.net', name: 'Administrator' })
+policy = Policies::Operation::Create.call(params: { name: 'admin', inline: true, owner: 'user', statements: [{ effect: 'allow', actions: ['*'], resources: ['*'] }] })
+MapUserPolicies::Operation::Create.call(params: { user_id: user[:model].id, policy_id: policy[:model].id })
+
 #--------------------------------------------------------------------
 # IAM
 #--------------------------------------------------------------------
