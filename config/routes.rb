@@ -22,5 +22,6 @@ Rails.application.routes.draw do
     resources :policies,    only: %i[index create destroy], param: :policy_id,      controller: 'map_user_policies'
   end
 
+  resources :tokens,        only: %i[index]
   resources :permissions,   only: %i[index show]
 end
