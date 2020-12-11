@@ -2,7 +2,7 @@ class ApplicationController < Panicboat::ApplicationController
   private
 
   def _run_options(ctx)
-    headers = RequestHeader.new(request.headers)
+    headers = ::RequestHeader.new(request.headers)
     ctx.merge!({ headers: headers })
     ctx.merge!({ action: "#{ENV['AWS_ECS_SERVICE']}:#{_action}" })
     ctx.merge!({ current_user: _session(headers) })
@@ -20,7 +20,7 @@ class ApplicationController < Panicboat::ApplicationController
   end
 
   def _session(headers)
-    jwt = headers.authorization[RequestHeader::USER_CLAIMS]
+    jwt = headers.authorization[::RequestHeader::USER_CLAIMS]
     return nil if jwt.blank?
 
     data = ::TokenManager.new(jwt).decode
