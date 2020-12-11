@@ -9,5 +9,9 @@ module Tokens
     def expected_attrs
       {}
     end
+
+    # test "the truth" do
+    #   assert true
+    # end
   end
 end
