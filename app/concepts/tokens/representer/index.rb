@@ -1,5 +1,5 @@
 module Tokens::Representer
   class Index < Abstract::Representer
-    collection :Payload
+    property :Payload
   end
 end

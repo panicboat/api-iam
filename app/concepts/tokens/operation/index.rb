@@ -7,9 +7,25 @@ module Tokens::Operation
     step :model
 
     def model(ctx, **)
-      jwt = ctx[:headers].authorization[RequestHeader::USER_CLAIMS]
-      payload = decode(jwks, payload(jwt))
+      payload = {
+        "#{RequestHeader::USER_CLAIMS}": claim(ctx),
+        "#{RequestHeader::ACCESS_TOKEN}": token(ctx)
+      }
       ctx[:model] = OpenStruct.new({ Payload: payload })
+    end
+
+    def claim(ctx)
+      jwt = ctx[:headers].authorization[RequestHeader::USER_CLAIMS]
+      return nil if jwt.blank?
+
+      decode(jwks, payload(jwt))
+    end
+
+    def token(ctx)
+      jwt = ctx[:headers].authorization[RequestHeader::ACCESS_TOKEN]
+      return nil if jwt.blank?
+
+      decode(jwks, payload(jwt))
     end
 
     private
