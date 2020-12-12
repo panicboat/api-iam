@@ -4,7 +4,7 @@ class ApplicationController < Panicboat::ApplicationController
   def _run_options(ctx)
     headers = ::RequestHeader.new(request.headers)
     ctx.merge!({ headers: headers })
-    ctx.merge!({ action: "#{ENV['AWS_ECS_SERVICE']}:#{_action}" })
+    ctx.merge!({ action: "#{ENV['AWS_ECS_SERVICE_NAME']}:#{_action}" })
     ctx.merge!({ current_user: _session(headers) })
   end
 
