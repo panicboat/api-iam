@@ -3,11 +3,13 @@ require 'net/http'
 class TokenManager
   def initialize(jwt)
     @jwt = jwt
+    @url = "https://cognito-idp.#{ENV['AWS_DEFAULT_REGION']}.amazonaws.com/#{ENV['AWS_COGNITO_USERPOOL_ID']}"
     @payload = ::JWT.decode(jwt, nil, false)
   end
 
-  def decode
-    return nil if payload[0]['iss'] != "https://cognito-idp.#{ENV['AWS_DEFAULT_REGION']}.amazonaws.com/#{ENV['AWS_COGNITO_USERPOOL_ID']}"
+  def decode(accurate = true)
+    return nil if payload[0]['iss'] != url
+    return payload if accurate
 
     case payload[0]['token_use']
     when 'id'
@@ -19,10 +21,10 @@ class TokenManager
 
   private
 
-  attr_reader :jwt, :payload
+  attr_reader :jwt, :url, :payload
 
   def jwks
-    uri = "https://cognito-idp.#{ENV['AWS_DEFAULT_REGION']}.amazonaws.com/#{ENV['AWS_COGNITO_USERPOOL_ID']}/.well-known/jwks.json"
+    uri = "#{url}/.well-known/jwks.json"
     response = ::Net::HTTP.get_response(::URI.parse(uri))
     ::JSON.parse(response.body).with_indifferent_access
   end
