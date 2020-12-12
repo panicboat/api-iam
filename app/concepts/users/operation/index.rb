@@ -7,7 +7,7 @@ module Users::Operation
     step :model
 
     def model(ctx, **)
-      contract = contract(ctx)
+      contract = ctx[:"contract.default"]
       data = ::User.paging(contract.limit, contract.offset).order(contract.order)
       ctx[:model] = OpenStruct.new({ Users: data })
     end

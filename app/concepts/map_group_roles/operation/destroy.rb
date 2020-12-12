@@ -7,7 +7,7 @@ module MapGroupRoles::Operation
     step :model!
 
     def model!(ctx, **)
-      contract = contract(ctx)
+      contract = ctx[:"contract.default"]
       data = ::MapGroupRole.find_by({ group_id: contract.group_id, role_id: contract.role_id })
       data.destroy
       ctx[:model] = data

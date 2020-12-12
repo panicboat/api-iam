@@ -7,7 +7,7 @@ module MapGroupUsers::Operation
     step :model!
 
     def model!(ctx, **)
-      contract = contract(ctx)
+      contract = ctx[:"contract.default"]
       data = ::MapGroupUser.find_by({ group_id: contract.group_id, user_id: contract.user_id })
       data.destroy
       ctx[:model] = data

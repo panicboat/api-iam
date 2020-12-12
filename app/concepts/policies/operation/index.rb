@@ -7,7 +7,7 @@ module Policies::Operation
     step :model
 
     def model(ctx, **)
-      contract = contract(ctx)
+      contract = ctx[:"contract.default"]
       data = ::Policy.where({ inline: false }).paging(contract.limit, contract.offset).order(contract.order)
       ctx[:model] = OpenStruct.new({ Policies: data })
     end

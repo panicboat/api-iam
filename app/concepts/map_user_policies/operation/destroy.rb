@@ -7,7 +7,7 @@ module MapUserPolicies::Operation
     step :model!
 
     def model!(ctx, **)
-      contract = contract(ctx)
+      contract = ctx[:"contract.default"]
       data = ::MapUserPolicy.find_by({ user_id: contract.user_id, policy_id: contract.policy_id })
       data.destroy
       ctx[:model] = data

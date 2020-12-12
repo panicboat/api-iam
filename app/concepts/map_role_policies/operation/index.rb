@@ -7,7 +7,7 @@ module MapRolePolicies::Operation
     step :model
 
     def model(ctx, **)
-      contract = contract(ctx)
+      contract = ctx[:"contract.default"]
       data = ::MapRolePolicy.where({ role_id: contract.role_id }).paging(contract.limit, contract.offset).order(contract.order)
       ctx[:model] = OpenStruct.new({ MapRolePolicies: data })
     end

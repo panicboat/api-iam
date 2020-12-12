@@ -7,7 +7,7 @@ module MapUserRoles::Operation
     step :model
 
     def model(ctx, **)
-      contract = contract(ctx)
+      contract = ctx[:"contract.default"]
       data = ::MapUserRole.where({ user_id: contract.user_id }).paging(contract.limit, contract.offset).order(contract.order)
       ctx[:model] = OpenStruct.new({ MapUserRoles: data })
     end

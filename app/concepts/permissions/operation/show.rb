@@ -7,7 +7,7 @@ module Permissions::Operation
     step :model
 
     def model(ctx, **)
-      contract = contract(ctx)
+      contract = ctx[:"contract.default"]
       data = []
       policies = Concerns::Show.new(ctx[:current_user]).all
       ::Statement.joins(:policy).where({ policies: { id: policies.pluck(:id) } }).each do |statement|

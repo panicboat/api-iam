@@ -7,7 +7,7 @@ module MapGroupPolicies::Operation
     step :model
 
     def model(ctx, **)
-      contract = contract(ctx)
+      contract = ctx[:"contract.default"]
       data = ::MapGroupPolicy.where({ group_id: contract.group_id }).paging(contract.limit, contract.offset).order(contract.order)
       ctx[:model] = OpenStruct.new({ MapGroupPolicies: data })
     end

@@ -7,7 +7,7 @@ module MapUserRoles::Operation
     step :model!
 
     def model!(ctx, **)
-      contract = contract(ctx)
+      contract = ctx[:"contract.default"]
       data = ::MapUserRole.find_by({ user_id: contract.user_id, role_id: contract.role_id })
       data.destroy
       ctx[:model] = data

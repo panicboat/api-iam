@@ -7,7 +7,7 @@ module MapUserPolicies::Operation
     step :model
 
     def model(ctx, **)
-      contract = contract(ctx)
+      contract = ctx[:"contract.default"]
       data = ::MapUserPolicy.where({ user_id: contract.user_id }).paging(contract.limit, contract.offset).order(contract.order)
       ctx[:model] = OpenStruct.new({ MapUserPolicies: data })
     end

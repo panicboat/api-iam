@@ -7,7 +7,7 @@ module MapGroupPolicies::Operation
     step :model!
 
     def model!(ctx, **)
-      contract = contract(ctx)
+      contract = ctx[:"contract.default"]
       data = ::MapGroupPolicy.find_by({ group_id: contract.group_id, policy_id: contract.policy_id })
       data.destroy
       ctx[:model] = data

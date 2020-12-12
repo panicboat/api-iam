@@ -7,7 +7,7 @@ module MapGroupRoles::Operation
     step :model
 
     def model(ctx, **)
-      contract = contract(ctx)
+      contract = ctx[:"contract.default"]
       data = ::MapGroupRole.where({ group_id: contract.group_id }).paging(contract.limit, contract.offset).order(contract.order)
       ctx[:model] = OpenStruct.new({ MapGroupRoles: data })
     end

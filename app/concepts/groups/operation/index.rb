@@ -7,7 +7,7 @@ module Groups::Operation
     step :model
 
     def model(ctx, **)
-      contract = contract(ctx)
+      contract = ctx[:"contract.default"]
       data = ::Group.paging(contract.limit, contract.offset).order(contract.order)
       ctx[:model] = OpenStruct.new({ Groups: data })
     end

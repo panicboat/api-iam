@@ -7,7 +7,7 @@ module Actions::Operation
     step :model
 
     def model(ctx, **)
-      contract = contract(ctx)
+      contract = ctx[:"contract.default"]
       data = ::Action.where({ service_id: contract.service_id }).paging(contract.limit, contract.offset).order(contract.order)
       ctx[:model] = OpenStruct.new({ Actions: data })
     end

@@ -7,7 +7,7 @@ module Services::Operation
     step :model
 
     def model(ctx, **)
-      contract = contract(ctx)
+      contract = ctx[:"contract.default"]
       data = ::Service.paging(contract.limit, contract.offset).order(contract.order)
       ctx[:model] = OpenStruct.new({ Services: data })
     end
