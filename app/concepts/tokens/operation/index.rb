@@ -18,14 +18,14 @@ module Tokens::Operation
       jwt = ctx[:headers].authorization[RequestHeader::USER_CLAIMS]
       return nil if jwt.blank?
 
-      ::TokenManager.new(jwt).decode
+      ::TokenManager.new(jwt).decode(Rails.env.development?)  # TODO: Make it the optimum parameter
     end
 
     def token(ctx)
       jwt = ctx[:headers].authorization[RequestHeader::ACCESS_TOKEN]
       return nil if jwt.blank?
 
-      ::TokenManager.new(jwt).decode
+      ::TokenManager.new(jwt).decode(Rails.env.development?)  # TODO: Make it the optimum parameter
     end
   end
 end
