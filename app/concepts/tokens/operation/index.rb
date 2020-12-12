@@ -8,8 +8,8 @@ module Tokens::Operation
 
     def model(ctx, **)
       payload = {
-        "#{RequestHeader::USER_CLAIMS}": claim(ctx),
-        "#{RequestHeader::ACCESS_TOKEN}": token(ctx)
+        claims: claim(ctx),
+        accesstoken: token(ctx)
       }
       ctx[:model] = OpenStruct.new({ Payload: payload })
     end
