@@ -7,7 +7,10 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 user = Users::Operation::Create.call(params: { email: 'admin@panicboat.net', name: 'Administrator' })
-policy = Policies::Operation::Create.call(params: { name: 'admin', inline: true, owner: 'user', statements: [{ effect: 'allow', actions: ['*'], resources: ['*'] }] })
+statements = [
+  { effect: 'allow', actions: ['*'], resources: ['*'] }
+]
+policy = Policies::Operation::Create.call(params: { name: 'admin', inline: true, owner: 'user', statements: statements })
 MapUserPolicies::Operation::Create.call(params: { user_id: user[:model].id, policy_id: policy[:model].id })
 
 #--------------------------------------------------------------------
