@@ -8,10 +8,11 @@ module Policies::Operation
     step :model!
 
     def model!(ctx, model:, **)
+      contract = ctx[:"contract.default"]
       ::Statement.where({ policy_id: model.id }).each do |statements|
         statements.destroy
       end
-      Concerns::Refresh.new(contract(ctx).statements).save!(model)
+      Concerns::Refresh.new(contract.statements).save!(model)
       ctx[:model] = Concerns::Show.new(model).model
     end
   end

@@ -9,7 +9,8 @@ module Policies::Operation
     step :model!
 
     def model!(ctx, model:, **)
-      Concerns::Refresh.new(contract(ctx).statements).save!(model)
+      contract = ctx[:"contract.default"]
+      Concerns::Refresh.new(contract.statements).save!(model)
       ctx[:model] = Concerns::Show.new(model).model
     end
   end
