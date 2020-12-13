@@ -56,6 +56,7 @@ group :test do
   gem 'codecov'
   gem 'simplecov'
   gem 'trailblazer-test'
+  gem 'webmock'
 end
 
 group :production do
