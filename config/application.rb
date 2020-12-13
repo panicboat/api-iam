@@ -36,7 +36,7 @@ module Admin
     config.api_only = true
 
     config.active_record.default_timezone = :local
-    # TODO: Panicboat::ApplicationController Inheritance ActionController::API
+
     config.middleware.use ActionDispatch::Flash
 
     config.colorize_logging = false

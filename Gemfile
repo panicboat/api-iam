@@ -49,6 +49,7 @@ group :development do
   gem 'rails-erd'
   gem 'ruby-debug-ide'
   gem 'solargraph'
+  gem 'trailblazer-developer'
 end
 
 group :test do
