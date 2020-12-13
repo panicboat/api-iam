@@ -13,19 +13,19 @@ class GroupsController < ApplicationController
 
   def create
     run Groups::Operation::Create, params: params do |ctx|
-      render json: represent(Groups::Representer::Show, ctx)
+      render json: represent(Groups::Representer::Create, ctx)
     end
   end
 
   def update
     run Groups::Operation::Update, params: params do |ctx|
-      render json: represent(Groups::Representer::Show, ctx)
+      render json: represent(Groups::Representer::Update, ctx)
     end
   end
 
   def destroy
     run Groups::Operation::Destroy, params: params do |ctx|
-      render json: represent(Groups::Representer::Show, ctx)
+      render json: represent(Groups::Representer::Destroy, ctx)
     end
   end
 end

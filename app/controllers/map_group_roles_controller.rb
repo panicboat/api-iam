@@ -7,13 +7,13 @@ class MapGroupRolesController < ApplicationController
 
   def create
     run MapGroupRoles::Operation::Create, params: params do |ctx|
-      render json: represent(MapGroupRoles::Representer::Show, ctx)
+      render json: represent(MapGroupRoles::Representer::Create, ctx)
     end
   end
 
   def destroy
     run MapGroupRoles::Operation::Destroy, params: params do |ctx|
-      render json: represent(MapGroupRoles::Representer::Show, ctx)
+      render json: represent(MapGroupRoles::Representer::Destroy, ctx)
     end
   end
 end

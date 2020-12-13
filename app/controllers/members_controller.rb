@@ -13,19 +13,19 @@ class MembersController < ApplicationController
 
   def create
     run Members::Operation::Create, params: params do |ctx|
-      render json: represent(Members::Representer::Show, ctx)
+      render json: represent(Members::Representer::Create, ctx)
     end
   end
 
   def update
     run Members::Operation::Update, params: params do |ctx|
-      render json: represent(Members::Representer::Show, ctx)
+      render json: represent(Members::Representer::Update, ctx)
     end
   end
 
   def destroy
     run Members::Operation::Destroy, params: params do |ctx|
-      render json: represent(Members::Representer::Show, ctx)
+      render json: represent(Members::Representer::Destroy, ctx)
     end
   end
 end
