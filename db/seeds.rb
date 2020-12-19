@@ -100,6 +100,13 @@ Actions::Operation::Create.call(params: { service_id: advertisements[:model].id,
 Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'UpdateProduct',  description: '',  access_level: 'write' })
 Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'DeleteProduct',  description: '',  access_level: 'write' })
 
+## Campaign
+Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'ListCampaign',    description: '',  access_level: 'list' })
+Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'GetCampaign',     description: '',  access_level: 'read' })
+Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'CreateCampaign',  description: '',  access_level: 'write' })
+Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'UpdateCampaign',  description: '',  access_level: 'write' })
+Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'DeleteCampaign',  description: '',  access_level: 'write' })
+
 ## Event
 Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'ListEvent',    description: '',  access_level: 'list' })
 Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'GetEvent',     description: '',  access_level: 'read' })
