@@ -92,3 +92,73 @@ Actions::Operation::Create.call(params: { service_id: advertisements[:model].id,
 Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'CreateAdvertiser',  description: '',  access_level: 'write' })
 Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'UpdateAdvertiser',  description: '',  access_level: 'write' })
 Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'DeleteAdvertiser',  description: '',  access_level: 'write' })
+
+## Product
+Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'ListProduct',    description: '',  access_level: 'list' })
+Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'GetProduct',     description: '',  access_level: 'read' })
+Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'CreateProduct',  description: '',  access_level: 'write' })
+Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'UpdateProduct',  description: '',  access_level: 'write' })
+Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'DeleteProduct',  description: '',  access_level: 'write' })
+
+## Event
+Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'ListEvent',    description: '',  access_level: 'list' })
+Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'GetEvent',     description: '',  access_level: 'read' })
+Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'CreateEvent',  description: '',  access_level: 'write' })
+Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'UpdateEvent',  description: '',  access_level: 'write' })
+Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'DeleteEvent',  description: '',  access_level: 'write' })
+
+## Banner
+Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'ListBanner',    description: '',  access_level: 'list' })
+Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'GetBanner',     description: '',  access_level: 'read' })
+Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'CreateBanner',  description: '',  access_level: 'write' })
+Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'UpdateBanner',  description: '',  access_level: 'write' })
+Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'DeleteBanner',  description: '',  access_level: 'write' })
+
+## BannerDetail
+Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'ListBannerDetail',    description: '',  access_level: 'list' })
+Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'GetBannerDetail',     description: '',  access_level: 'read' })
+Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'CreateBannerDetail',  description: '',  access_level: 'write' })
+Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'UpdateBannerDetail',  description: '',  access_level: 'write' })
+Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'DeleteBannerDetail',  description: '',  access_level: 'write' })
+
+## Budget
+Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'ListBudget',    description: '',  access_level: 'list' })
+Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'GetBudget',     description: '',  access_level: 'read' })
+Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'CreateBudget',  description: '',  access_level: 'write' })
+Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'UpdateBudget',  description: '',  access_level: 'write' })
+Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'DeleteBudget',  description: '',  access_level: 'write' })
+
+## BudgetDetail
+Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'ListBudgetDetail',    description: '',  access_level: 'list' })
+Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'GetBudgetDetail',     description: '',  access_level: 'read' })
+Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'CreateBudgetDetail',  description: '',  access_level: 'write' })
+Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'UpdateBudgetDetail',  description: '',  access_level: 'write' })
+Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'DeleteBudgetDetail',  description: '',  access_level: 'write' })
+
+## Achievement
+Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'ListAchievement',    description: '',  access_level: 'list' })
+Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'GetAchievement',     description: '',  access_level: 'read' })
+Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'CreateAchievement',  description: '',  access_level: 'write' })
+Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'UpdateAchievement',  description: '',  access_level: 'write' })
+Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'DeleteAchievement',  description: '',  access_level: 'write' })
+
+## AchievementDetail
+Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'ListAchievementDetail',    description: '',  access_level: 'list' })
+Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'GetAchievementDetail',     description: '',  access_level: 'read' })
+Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'CreateAchievementDetail',  description: '',  access_level: 'write' })
+Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'UpdateAchievementDetail',  description: '',  access_level: 'write' })
+Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'DeleteAchievementDetail',  description: '',  access_level: 'write' })
+
+## Measurement
+Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'ListMeasurement',    description: '',  access_level: 'list' })
+Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'GetMeasurement',     description: '',  access_level: 'read' })
+Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'CreateMeasurement',  description: '',  access_level: 'write' })
+Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'UpdateMeasurement',  description: '',  access_level: 'write' })
+Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'DeleteMeasurement',  description: '',  access_level: 'write' })
+
+## MeasurementDetail
+Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'ListMeasurementDetail',    description: '',  access_level: 'list' })
+Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'GetMeasurementDetail',     description: '',  access_level: 'read' })
+Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'CreateMeasurementDetail',  description: '',  access_level: 'write' })
+Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'UpdateMeasurementDetail',  description: '',  access_level: 'write' })
+Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'DeleteMeasurementDetail',  description: '',  access_level: 'write' })
