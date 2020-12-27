@@ -29,7 +29,7 @@ module Permissions
     test 'Check UserRole' do
       ::MapUserRoles::Operation::Create.call(params: { user_id: @user[:model].id, role_id: @role1[:model].id })
       ::MapUserRoles::Operation::Create.call(params: { user_id: @user[:model].id, role_id: @role2[:model].id })
-      ctx = Operation::Show.call(params: { service_action_name: 'iam:IamAction' }, current_user: @user[:model])
+      ctx = Operation::Show.call(params: { id: '12345678-1234-1234-1234-123456789012', service_action_name: 'iam:IamAction' }, current_user: @user[:model])
       assert_equal ctx[:model].Permissions.length, 1
       ctx[:model].Permissions.each do |permission|
         assert_equal permission.effect, 'allow'
@@ -40,7 +40,7 @@ module Permissions
     test 'Check UserPolicy' do
       ::MapUserPolicies::Operation::Create.call(params: { user_id: @user[:model].id, policy_id: @policy1[:model].id })
       ::MapUserPolicies::Operation::Create.call(params: { user_id: @user[:model].id, policy_id: @policy2[:model].id })
-      ctx = Operation::Show.call(params: { service_action_name: 'iam:IamAction' }, current_user: @user[:model])
+      ctx = Operation::Show.call(params: { id: '12345678-1234-1234-1234-123456789012', service_action_name: 'iam:IamAction' }, current_user: @user[:model])
       assert_equal ctx[:model].Permissions.length, 1
       ctx[:model].Permissions.each do |permission|
         assert_equal permission.effect, 'allow'
@@ -53,7 +53,7 @@ module Permissions
       ::MapGroupUsers::Operation::Create.call(params: { group_id: @group2[:model].id, user_id: @user[:model].id })
       ::MapGroupRoles::Operation::Create.call(params: { group_id: @group1[:model].id, role_id: @role1[:model].id })
       ::MapGroupRoles::Operation::Create.call(params: { group_id: @group2[:model].id, role_id: @role2[:model].id })
-      ctx = Operation::Show.call(params: { service_action_name: 'iam:IamAction' }, current_user: @user[:model])
+      ctx = Operation::Show.call(params: { id: '12345678-1234-1234-1234-123456789012', service_action_name: 'iam:IamAction' }, current_user: @user[:model])
       assert_equal ctx[:model].Permissions.length, 1
       ctx[:model].Permissions.each do |permission|
         assert_equal permission.effect, 'allow'
@@ -66,7 +66,7 @@ module Permissions
       ::MapGroupUsers::Operation::Create.call(params: { group_id: @group2[:model].id, user_id: @user[:model].id })
       ::MapGroupPolicies::Operation::Create.call(params: { group_id: @group1[:model].id, policy_id: @policy1[:model].id })
       ::MapGroupPolicies::Operation::Create.call(params: { group_id: @group2[:model].id, policy_id: @policy2[:model].id })
-      ctx = Operation::Show.call(params: { service_action_name: 'iam:IamAction' }, current_user: @user[:model])
+      ctx = Operation::Show.call(params: { id: '12345678-1234-1234-1234-123456789012', service_action_name: 'iam:IamAction' }, current_user: @user[:model])
       assert_equal ctx[:model].Permissions.length, 1
       ctx[:model].Permissions.each do |permission|
         assert_equal permission.effect, 'allow'
