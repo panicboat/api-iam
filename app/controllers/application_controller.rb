@@ -24,6 +24,7 @@ class ApplicationController < Panicboat::ApplicationController
     return nil if jwt.blank?
 
     data = ::TokenManager.new(jwt).decode
+    return nil if data.blank?
 
     ::User.find_by(email: data.first['email'])
   end
