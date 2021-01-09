@@ -12,8 +12,7 @@ module Actions::Contract
     validate  :uniqueness
 
     def uniqueness
-      # validates_uniqueness_of :name, scope: [:service_id]
-      errors.add(:name, I18n.t('errors.messages.taken')) if ::Action.where({ service_id: service_id, name: name }).present?
+      errors.add(:name, I18n.t('errors.messages.taken')) if ::Action.where.not({ id: id }).where({ service_id: service_id, name: name }).present?
     end
   end
 end

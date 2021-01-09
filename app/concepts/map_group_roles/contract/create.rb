@@ -8,7 +8,6 @@ module MapGroupRoles::Contract
     validate  :uniqueness
 
     def uniqueness
-      # validates_uniqueness_of :role_id, scope: [:group_id]
       errors.add(:role_id, I18n.t('errors.messages.taken')) if ::MapGroupRole.where({ group_id: group_id, role_id: role_id }).present?
     end
   end

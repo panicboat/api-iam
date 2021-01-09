@@ -24,7 +24,7 @@ module MapGroupUsers
       e = assert_raises InvalidParameters do
         Operation::Create.call(params: default_params)
       end
-      assert_equal ['User Id has already been taken'], JSON.parse(e.message)
+      assert_equal ['User has already been taken'], JSON.parse(e.message)
     end
   end
 end

@@ -8,8 +8,7 @@ module Users::Contract
     validate  :uniqueness
 
     def uniqueness
-      # validates_uniqueness_of :email
-      errors.add(:email, I18n.t('errors.messages.taken')) if ::User.where({ email: email }).present?
+      errors.add(:email, I18n.t('errors.messages.taken')) if ::User.where.not({ id: id }).where({ email: email }).present?
     end
   end
 end

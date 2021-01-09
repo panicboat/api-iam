@@ -8,7 +8,6 @@ module MapUserRoles::Contract
     validate  :uniqueness
 
     def uniqueness
-      # validates_uniqueness_of :role_id, scope: [:user_id]
       errors.add(:role_id, I18n.t('errors.messages.taken')) if ::MapUserRole.where({ user_id: user_id, role_id: role_id }).present?
     end
   end

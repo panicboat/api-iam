@@ -24,7 +24,7 @@ module MapRolePolicies
       e = assert_raises InvalidParameters do
         Operation::Create.call(params: default_params)
       end
-      assert_equal ['Policy Id has already been taken'], JSON.parse(e.message)
+      assert_equal ['Policy has already been taken'], JSON.parse(e.message)
     end
   end
 end

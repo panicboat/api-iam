@@ -1,11 +1,7 @@
 module Members::Contract
-  class Update < Abstract::Contract
+  class Update < Create
     property  :id
-    property  :name
-    property  :description
 
-    validates :id,          presence: true, format: { with: FORMAT_UUID }
-    validates :name,        presence: true
-    validates :description, presence: false
+    validates :id, presence: true, format: { with: FORMAT_UUID }
   end
 end

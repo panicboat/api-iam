@@ -25,7 +25,7 @@ module MapUserPolicies
       e = assert_raises InvalidParameters do
         Operation::Destroy.call(params: { user_id: '12345678-1234-1234-1234-123456789012', policy_id: '12345678-1234-1234-1234-123456789012' })
       end
-      assert_equal ['User Policy is invalid'], JSON.parse(e.message)
+      assert_equal ['User policy is invalid'], JSON.parse(e.message)
     end
   end
 end

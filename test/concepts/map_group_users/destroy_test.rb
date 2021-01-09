@@ -25,7 +25,7 @@ module MapGroupUsers
       e = assert_raises InvalidParameters do
         Operation::Destroy.call(params: { group_id: '12345678-1234-1234-1234-123456789012', user_id: '12345678-1234-1234-1234-123456789012' })
       end
-      assert_equal ['Group User is invalid'], JSON.parse(e.message)
+      assert_equal ['Group user is invalid'], JSON.parse(e.message)
     end
   end
 end

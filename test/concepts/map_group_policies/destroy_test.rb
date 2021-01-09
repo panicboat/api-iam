@@ -25,7 +25,7 @@ module MapGroupPolicies
       e = assert_raises InvalidParameters do
         Operation::Destroy.call(params: { group_id: '12345678-1234-1234-1234-123456789012', policy_id: '12345678-1234-1234-1234-123456789012' })
       end
-      assert_equal ['Group Policy is invalid'], JSON.parse(e.message)
+      assert_equal ['Group policy is invalid'], JSON.parse(e.message)
     end
   end
 end

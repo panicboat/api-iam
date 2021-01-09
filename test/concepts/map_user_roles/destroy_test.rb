@@ -25,7 +25,7 @@ module MapUserRoles
       e = assert_raises InvalidParameters do
         Operation::Destroy.call(params: { user_id: '12345678-1234-1234-1234-123456789012', role_id: '12345678-1234-1234-1234-123456789012' })
       end
-      assert_equal ['User Role is invalid'], JSON.parse(e.message)
+      assert_equal ['User role is invalid'], JSON.parse(e.message)
     end
   end
 end

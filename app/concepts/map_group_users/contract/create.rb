@@ -8,7 +8,6 @@ module MapGroupUsers::Contract
     validate  :uniqueness
 
     def uniqueness
-      # validates_uniqueness_of :user_id, scope: [:group_id]
       errors.add(:user_id, I18n.t('errors.messages.taken')) if ::MapGroupUser.where({ group_id: group_id, user_id: user_id }).present?
     end
   end
