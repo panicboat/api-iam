@@ -2,7 +2,6 @@ Rails.application.routes.draw do
   mount Panicboat::Engine, at: '/panicboat'
 
   resources :health,        only: %i[index]
-  resources :members,       only: %i[index show create update destroy]
   resources :services,      only: %i[index show create update destroy] do
     resources :actions,     only: %i[index show create update destroy]
   end

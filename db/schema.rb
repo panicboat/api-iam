@@ -92,16 +92,6 @@ ActiveRecord::Schema.define(version: 2020_08_22_020000) do
     t.index ["user_id", "role_id"], name: "index_map_user_roles_on_user_id_and_role_id", unique: true
   end
 
-  create_table "members", id: :string, limit: 36, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", comment: "メンバー", force: :cascade do |t|
-    t.string "email", null: false, comment: "メールアドレス"
-    t.string "name", null: false, comment: "名前"
-    t.string "image", comment: "アイコン"
-    t.string "description", comment: "コメント"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["email"], name: "index_members_on_email", unique: true
-  end
-
   create_table "policies", id: :string, limit: 36, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", comment: "ポリシー", force: :cascade do |t|
     t.string "name", null: false, comment: "名前"
     t.string "description", comment: "説明"
