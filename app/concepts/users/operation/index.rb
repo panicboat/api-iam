@@ -4,11 +4,12 @@ module Users::Operation
     step Contract::Build(constant: Users::Contract::Index)
     step Contract::Validate()
     fail :invalid_params!
+    step :permit!
     step :model
 
     def model(ctx, **)
       contract = ctx[:"contract.default"]
-      data = ::User.paging(contract.limit, contract.offset).order(contract.order)
+      data = scrape(ctx).paging(contract.limit, contract.offset).order(contract.order)
       ctx[:model] = OpenStruct.new({ Users: data })
     end
   end

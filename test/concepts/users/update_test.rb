@@ -2,22 +2,41 @@ require 'test_helper'
 
 module Users
   class UpdateTest < ActionDispatch::IntegrationTest
+    fixtures :users
+
+    setup do
+      @current_user = JSON.parse({ name: 'Spec' }.to_json, object_class: OpenStruct)
+      WebMock.stub_request(:get, "#{ENV['HTTP_IAM_URL']}/permissions/00000000-0000-0000-0000-000000000000").to_return(
+        body: File.read("#{Rails.root}/test/fixtures/files/platform_iam_get_permission.json"),
+        status: 200,
+        headers: { 'Content-Type': 'application/json' }
+      )
+    end
+
     def default_params
-      { email: 'spec@panicboat.net', name: 'Spec' }
+      { id: '10000000-0000-0000-0000-000000000000', email: 'spec@panicboat.net', name: 'Spec' }
     end
 
     def expected_attrs
-      { email: 'spec@panicboat.net', name: 'Spec' }
+      { id: '10000000-0000-0000-0000-000000000000', email: 'spec@panicboat.net', name: 'Spec' }
+    end
+
+    test 'Permission Deny : No Session' do
+      e = assert_raises InvalidPermissions do
+        Operation::Update.call(params: { id: users(:administrator).id, name: 'This is name.' })
+      end
+      assert_equal ['Permissions is invalid'], JSON.parse(e.message)
     end
 
     test 'Update Data' do
-      result = Operation::Create.call(params: default_params)
-      assert_pass Operation::Update, params({ id: result[:model].id, name: 'UpdateSpec' }), name: 'UpdateSpec'
+      ctx = Operation::Update.call(params: { id: users(:administrator).id, name: 'This is name.' }, current_user: @current_user)
+      assert ctx.success?
+      assert_equal 'This is name.', ctx[:model].name
     end
 
-    test 'Show No Data' do
+    test 'Update No Data' do
       e = assert_raises InvalidParameters do
-        Operation::Update.call(params: { id: '12345678-1234-1234-1234-123456789012' })
+        Operation::Update.call(params: { id: -1 })
       end
       assert_equal ['Parameters is invalid'], JSON.parse(e.message)
     end

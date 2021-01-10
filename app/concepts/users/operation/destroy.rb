@@ -4,6 +4,8 @@ module Users::Operation
     step Contract::Build(constant: Users::Contract::Destroy)
     step Contract::Validate()
     fail :invalid_params!
+    step :permit!
+    step :scrape!
     step :model!
 
     def model!(ctx, model:, **)
