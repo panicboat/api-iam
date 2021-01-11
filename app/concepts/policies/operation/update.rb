@@ -4,6 +4,8 @@ module Policies::Operation
     step Contract::Build(constant: Policies::Contract::Update)
     step Contract::Validate()
     fail :invalid_params!
+    step :permit!
+    step :scrape!
     step Contract::Persist()
     step :model!
 

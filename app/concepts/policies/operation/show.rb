@@ -4,6 +4,8 @@ module Policies::Operation
     step Contract::Build(constant: Policies::Contract::Show)
     step Contract::Validate()
     fail :invalid_params!
+    step :permit!
+    step :scrape!
     step :model
 
     def model(ctx, model:, **)
