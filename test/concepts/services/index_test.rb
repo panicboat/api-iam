@@ -2,26 +2,34 @@ require 'test_helper'
 
 module Services
   class IndexTest < ActionDispatch::IntegrationTest
+    fixtures :services
+
+    setup do
+      @current_user = JSON.parse({ name: 'Spec' }.to_json, object_class: OpenStruct)
+      WebMock.stub_request(:get, "#{ENV['HTTP_IAM_URL']}/permissions/00000000-0000-0000-0000-000000000000").to_return(
+        body: File.read("#{Rails.root}/test/fixtures/files/platform_iam_get_permission.json"),
+        status: 200,
+        headers: { 'Content-Type': 'application/json' }
+      )
+    end
+
     def default_params
-      { name: 'iam', description: 'API of Identity and Access Management.' }
+      { id: '10000000-0000-0000-0000-000000000000', name: 'Spec', description: 'This is description' }
     end
 
     def expected_attrs
-      { name: 'iam', description: 'API of Identity and Access Management.' }
+      { id: '10000000-0000-0000-0000-000000000000', name: 'Spec', description: 'This is description' }
     end
 
     test 'Index Data' do
-      Operation::Create.call(params: { name: 'iam1', description: 'Spec1' })
-      Operation::Create.call(params: { name: 'iam2', description: 'Spec2' })
-      ctx = Operation::Index.call(params: {})
-      assert_equal ctx[:model].Services.length, 2
-      ctx[:model].Services.each do |service|
-        assert_equal %w[iam1 iam2].include?(service.name), true
-      end
+      ctx = Operation::Index.call(params: {}, current_user: @current_user)
+      assert ctx[:model].Services.present?
+      assert_equal ::Service.all.count, ctx[:model].Services.length
     end
 
     test 'Index No Data' do
-      assert_equal Operation::Index.call(params: {})[:model].Services, []
+      ::Service.all.each(&:destroy)
+      assert_equal [], Operation::Index.call(params: {}, current_user: @current_user)[:model].Services
     end
   end
 end

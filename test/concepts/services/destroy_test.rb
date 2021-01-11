@@ -2,23 +2,41 @@ require 'test_helper'
 
 module Services
   class DestroyTest < ActionDispatch::IntegrationTest
+    fixtures :services
+
+    setup do
+      @current_user = JSON.parse({ name: 'Spec' }.to_json, object_class: OpenStruct)
+      WebMock.stub_request(:get, "#{ENV['HTTP_IAM_URL']}/permissions/00000000-0000-0000-0000-000000000000").to_return(
+        body: File.read("#{Rails.root}/test/fixtures/files/platform_iam_get_permission.json"),
+        status: 200,
+        headers: { 'Content-Type': 'application/json' }
+      )
+    end
+
     def default_params
-      { name: 'iam', description: 'API of Identity and Access Management.' }
+      { id: '10000000-0000-0000-0000-000000000000', name: 'Spec', description: 'This is description' }
     end
 
     def expected_attrs
-      { name: 'iam', description: 'API of Identity and Access Management.' }
+      { id: '10000000-0000-0000-0000-000000000000', name: 'Spec', description: 'This is description' }
     end
 
-    test 'Destroy Data' do
-      result = Operation::Create.call(params: default_params)
-      assert_pass Operation::Destroy, params({ id: result[:model].id }), name: 'iam'
-      assert_equal Operation::Index.call(params: {})[:model].Services, []
+    test 'Permission Deny' do
+      e = assert_raises InvalidPermissions do
+        Operation::Destroy.call(params: { id: services(:iam).id })
+      end
+      assert_equal ['Permissions is invalid'], JSON.parse(e.message)
+    end
+
+    test 'Destory Data' do
+      ctx = Operation::Destroy.call(params: { id: services(:iam).id }, current_user: @current_user)
+      assert ctx.success?
+      assert_equal [], ::Service.where({ id: services(:iam).id })
     end
 
     test 'Destroy No Data' do
       e = assert_raises InvalidParameters do
-        Operation::Destroy.call(params: { id: '12345678-1234-1234-1234-123456789012' })
+        Operation::Destroy.call(params: { id: -1 }, current_user: @current_user)
       end
       assert_equal ['Parameters is invalid'], JSON.parse(e.message)
     end
