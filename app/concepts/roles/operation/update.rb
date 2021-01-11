@@ -4,6 +4,8 @@ module Roles::Operation
     step Contract::Build(constant: Roles::Contract::Update)
     step Contract::Validate()
     fail :invalid_params!
+    step :permit!
+    step :scrape!
     step Contract::Persist()
   end
 end
