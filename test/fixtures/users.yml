@@ -6,6 +6,12 @@
 #
 administrator:
   id: 00000000-0000-0000-0000-000000000001
-  email: fixtures@panicboat.net
+  email: administrator@panicboat.net
   name: panicboat
   image: https://image.panicboat.net/image1.png
+
+fixtures:
+  id: 00000000-0000-0000-0000-000000000002
+  email: fixtures@panicboat.net
+  name: panicboat
+  image: https://image.panicboat.net/image2.png

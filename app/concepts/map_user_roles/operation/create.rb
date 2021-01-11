@@ -4,6 +4,7 @@ module MapUserRoles::Operation
     step Contract::Build(constant: MapUserRoles::Contract::Create)
     step Contract::Validate()
     fail :invalid_params!
+    step :permit!
     step Contract::Persist()
   end
 end

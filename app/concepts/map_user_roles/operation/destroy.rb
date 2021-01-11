@@ -4,6 +4,8 @@ module MapUserRoles::Operation
     step Contract::Build(constant: MapUserRoles::Contract::Destroy)
     step Contract::Validate()
     fail :invalid_params!
+    step :permit!
+    step :scrape!
     step :model!
 
     def model!(ctx, **)
