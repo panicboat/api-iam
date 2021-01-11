@@ -4,6 +4,8 @@ module Groups::Operation
     step Contract::Build(constant: Groups::Contract::Update)
     step Contract::Validate()
     fail :invalid_params!
+    step :permit!
+    step :scrape!
     step Contract::Persist()
   end
 end

@@ -4,11 +4,12 @@ module Groups::Operation
     step Contract::Build(constant: Groups::Contract::Index)
     step Contract::Validate()
     fail :invalid_params!
+    step :permit!
     step :model
 
     def model(ctx, **)
       contract = ctx[:"contract.default"]
-      data = ::Group.paging(contract.limit, contract.offset).order(contract.order)
+      data = scrape(ctx).paging(contract.limit, contract.offset).order(contract.order)
       ctx[:model] = OpenStruct.new({ Groups: data })
     end
   end

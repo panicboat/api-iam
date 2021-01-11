@@ -2,26 +2,34 @@ require 'test_helper'
 
 module Groups
   class IndexTest < ActionDispatch::IntegrationTest
+    fixtures :groups
+
+    setup do
+      @current_user = JSON.parse({ name: 'Spec' }.to_json, object_class: OpenStruct)
+      WebMock.stub_request(:get, "#{ENV['HTTP_IAM_URL']}/permissions/00000000-0000-0000-0000-000000000000").to_return(
+        body: File.read("#{Rails.root}/test/fixtures/files/platform_iam_get_permission.json"),
+        status: 200,
+        headers: { 'Content-Type': 'application/json' }
+      )
+    end
+
     def default_params
-      { name: 'admin', description: 'can do anything' }
+      { id: '10000000-0000-0000-0000-000000000000', name: 'GroupSpec', description: 'can do anything' }
     end
 
     def expected_attrs
-      { name: 'admin', description: 'can do anything' }
+      { id: '10000000-0000-0000-0000-000000000000', name: 'GroupSpec', description: 'can do anything' }
     end
 
     test 'Index Data' do
-      Operation::Create.call(params: { name: 'admin', description: 'Spec1' })
-      Operation::Create.call(params: { name: 'normal', description: 'Spec2' })
-      ctx = Operation::Index.call(params: {})
-      assert_equal ctx[:model].Groups.length, 2
-      ctx[:model].Groups.each do |group|
-        assert_equal %w[admin normal].include?(group.name), true
-      end
+      ctx = Operation::Index.call(params: {}, current_user: @current_user)
+      assert ctx[:model].Groups.present?
+      assert_equal ::Group.all.count, ctx[:model].Groups.length
     end
 
     test 'Index No Data' do
-      assert_equal Operation::Index.call(params: {})[:model].Groups, []
+      ::Group.all.each(&:destroy)
+      assert_equal [], Operation::Index.call(params: {}, current_user: @current_user)[:model].Groups
     end
   end
 end
