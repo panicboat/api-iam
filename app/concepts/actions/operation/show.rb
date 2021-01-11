@@ -4,6 +4,8 @@ module Actions::Operation
     step Contract::Build(constant: Actions::Contract::Show)
     step Contract::Validate()
     fail :invalid_params!
+    step :permit!
+    step :scrape!
     step Contract::Persist(method: :sync)
   end
 end

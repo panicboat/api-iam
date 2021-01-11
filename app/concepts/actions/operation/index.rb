@@ -4,11 +4,12 @@ module Actions::Operation
     step Contract::Build(constant: Actions::Contract::Index)
     step Contract::Validate()
     fail :invalid_params!
+    step :permit!
     step :model
 
     def model(ctx, **)
       contract = ctx[:"contract.default"]
-      data = ::Action.where({ service_id: contract.service_id }).paging(contract.limit, contract.offset).order(contract.order)
+      data = scrape(ctx).paging(contract.limit, contract.offset).order(contract.order)
       ctx[:model] = OpenStruct.new({ Actions: data })
     end
   end

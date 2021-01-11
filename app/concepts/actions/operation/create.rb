@@ -4,6 +4,7 @@ module Actions::Operation
     step Contract::Build(constant: Actions::Contract::Create)
     step Contract::Validate()
     fail :invalid_params!
+    step :permit!
     step :uuid!
     step Contract::Persist()
   end
