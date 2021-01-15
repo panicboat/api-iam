@@ -10,6 +10,7 @@ module Actions::Operation
     def model(ctx, **)
       contract = ctx[:"contract.default"]
       data = scrape(ctx).paging(contract.limit, contract.offset).order(contract.order)
+      data = data.where({ service_id: contract.service_id }) if contract.service_id.present?
       ctx[:model] = OpenStruct.new({ Actions: data })
     end
   end

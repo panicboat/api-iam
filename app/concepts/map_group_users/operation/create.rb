@@ -4,6 +4,7 @@ module MapGroupUsers::Operation
     step Contract::Build(constant: MapGroupUsers::Contract::Create)
     step Contract::Validate()
     fail :invalid_params!
+    step :permit!
     step Contract::Persist()
   end
 end

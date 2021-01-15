@@ -14,11 +14,11 @@ module Roles
     end
 
     def default_params
-      { id: '10000000-0000-0000-0000-000000000000', name: 'admin', description: 'can do anything', owner: 'user' }
+      { id: '10000000-0000-0000-0000-000000000000', name: 'RoleSpec', description: 'can do anything', owner: 'user' }
     end
 
     def expected_attrs
-      { id: '10000000-0000-0000-0000-000000000000', name: 'admin', description: 'can do anything', owner: 'user' }
+      { id: '10000000-0000-0000-0000-000000000000', name: 'RoleSpec', description: 'can do anything', owner: 'user' }
     end
 
     test 'Show Data' do

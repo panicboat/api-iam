@@ -4,9 +4,9 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-administrator:
+spec:
   id: 00000000-0000-0000-0000-000000000001
-  email: administrator@panicboat.net
+  email: spec@panicboat.net
   name: panicboat
   image: https://image.panicboat.net/image1.png
 
@@ -15,3 +15,9 @@ fixtures:
   email: fixtures@panicboat.net
   name: panicboat
   image: https://image.panicboat.net/image2.png
+
+administrator:
+  id: 00000000-0000-0000-0000-000000000003
+  email: administrator@panicboat.net
+  name: panicboat
+  image: https://image.panicboat.net/image3.png

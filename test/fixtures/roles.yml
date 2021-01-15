@@ -9,3 +9,9 @@ spec:
   name: SpecRole
   description: This is Role for Spec.
   owner: pnb
+
+fixture:
+  id: 00000000-0000-0000-0000-000000000002
+  name: FixtureRole
+  description: This is Role for Fixture.
+  owner: user

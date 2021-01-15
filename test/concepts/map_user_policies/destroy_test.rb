@@ -14,11 +14,11 @@ module MapUserPolicies
     end
 
     def default_params
-      { user_id: users(:fixtures).id, policy_id: policies(:spec).id }
+      { user_id: users(:spec).id, policy_id: policies(:spec).id }
     end
 
     def expected_attrs
-      { user_id: users(:fixtures).id, policy_id: policies(:spec).id }
+      { user_id: users(:spec).id, policy_id: policies(:spec).id }
     end
 
     test 'Permission Deny' do

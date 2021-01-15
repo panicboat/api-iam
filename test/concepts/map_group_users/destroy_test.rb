@@ -2,30 +2,43 @@ require 'test_helper'
 
 module MapGroupUsers
   class DestroyTest < ActionDispatch::IntegrationTest
+    fixtures :map_group_users, :groups, :users
+
     setup do
-      @group = ::Groups::Operation::Create.call({ params: { name: 'admin' } })
-      @user = ::Users::Operation::Create.call({ params: { email: 'spec@panicboat.net', name: 'Spec' } })
+      @current_user = JSON.parse({ name: 'Spec' }.to_json, object_class: OpenStruct)
+      WebMock.stub_request(:get, "#{ENV['HTTP_IAM_URL']}/permissions/00000000-0000-0000-0000-000000000000").to_return(
+        body: File.read("#{Rails.root}/test/fixtures/files/platform_iam_get_permission.json"),
+        status: 200,
+        headers: { 'Content-Type': 'application/json' }
+      )
     end
 
     def default_params
-      { group_id: @group[:model].id, user_id: @user[:model].id }
+      { group_id: groups(:spec).id, user_id: users(:spec).id }
     end
 
     def expected_attrs
-      { group_id: @group[:model].id, user_id: @user[:model].id }
+      { group_id: groups(:spec).id, user_id: users(:spec).id }
     end
 
-    test 'Destroy Data' do
-      result = Operation::Create.call(params: default_params)
-      assert_pass Operation::Destroy, params({ id: result[:model].id }), group_id: @group[:model].id
-      assert_equal Operation::Index.call(params: { group_id: @group[:model].id })[:model].MapGroupUsers, []
+    test 'Permission Deny' do
+      e = assert_raises InvalidPermissions do
+        Operation::Destroy.call(params: { group_id: map_group_users(:spec).group_id, user_id: map_group_users(:spec).user_id })
+      end
+      assert_equal ['Permissions is invalid'], JSON.parse(e.message)
+    end
+
+    test 'Destory Data' do
+      ctx = Operation::Destroy.call(params: { group_id: map_group_users(:spec).group_id, user_id: map_group_users(:spec).user_id }, current_user: @current_user)
+      assert ctx.success?
+      assert_equal [], ::MapGroupUser.where({ group_id: map_group_users(:spec).group_id })
     end
 
     test 'Destroy No Data' do
       e = assert_raises InvalidParameters do
-        Operation::Destroy.call(params: { group_id: '12345678-1234-1234-1234-123456789012', user_id: '12345678-1234-1234-1234-123456789012' })
+        Operation::Destroy.call(params: { group_id: -1, user_id: -1 }, current_user: @current_user)
       end
-      assert_equal ['Group user is invalid'], JSON.parse(e.message)
+      assert_equal ['Group is invalid', 'User is invalid'], JSON.parse(e.message)
     end
   end
 end

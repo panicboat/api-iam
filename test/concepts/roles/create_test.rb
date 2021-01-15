@@ -14,11 +14,11 @@ module Roles
     end
 
     def default_params
-      { id: '10000000-0000-0000-0000-000000000000', name: 'admin', description: 'can do anything', owner: 'user' }
+      { id: '10000000-0000-0000-0000-000000000000', name: 'RoleSpec', description: 'can do anything', owner: 'user' }
     end
 
     def expected_attrs
-      { id: '10000000-0000-0000-0000-000000000000', name: 'admin', description: 'can do anything', owner: 'user' }
+      { id: '10000000-0000-0000-0000-000000000000', name: 'RoleSpec', description: 'can do anything', owner: 'user' }
     end
 
     test 'Permission Deny' do
@@ -31,7 +31,7 @@ module Roles
     test 'Create Data' do
       ctx = Operation::Create.call(params: default_params, current_user: @current_user)
       assert ctx.success?
-      assert_equal 'admin', ctx[:model].name
+      assert_equal 'RoleSpec', ctx[:model].name
     end
 
     test 'Create Duplicate Name' do

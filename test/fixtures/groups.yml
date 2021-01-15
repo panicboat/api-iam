@@ -8,3 +8,8 @@ spec:
   id: 00000000-0000-0000-0000-000000000001
   name: SpecGroup
   description: This is Group for Spec.
+
+fixtures:
+  id: 00000000-0000-0000-0000-000000000002
+  name: FixtureGroup
+  description: This is Group for Fixture.

@@ -14,11 +14,11 @@ module MapUserRoles
     end
 
     def default_params
-      { user_id: users(:fixtures).id, role_id: roles(:spec).id }
+      { user_id: users(:spec).id, role_id: roles(:spec).id }
     end
 
     def expected_attrs
-      { user_id: users(:fixtures).id, role_id: roles(:spec).id }
+      { user_id: users(:spec).id, role_id: roles(:spec).id }
     end
 
     test 'Permission Deny' do

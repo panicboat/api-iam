@@ -14,25 +14,23 @@ module MapUserPolicies
     end
 
     def default_params
-      { user_id: users(:fixtures).id, policy_id: policies(:spec).id }
+      { user_id: users(:spec).id, policy_id: policies(:spec).id }
     end
 
     def expected_attrs
-      { user_id: users(:fixtures).id, policy_id: policies(:spec).id }
+      { user_id: users(:spec).id, policy_id: policies(:spec).id }
     end
 
     test 'Index Data' do
-      Operation::Create.call(params: default_params)
-      Operation::Create.call(params: default_params.merge({ policy_id: @policy2[:model].id }))
-      ctx = Operation::Index.call(params: { user_id: @user[:model].id })
-      assert_equal ctx[:model].MapUserPolicies.length, 2
-      ctx[:model].MapUserPolicies.each do |map_user_policy|
-        assert_equal [@policy1[:model].id, @policy2[:model].id].include?(map_user_policy.policy_id), true
-      end
+      ctx = Operation::Index.call(params: { user_id: map_user_policies(:spec).user_id }, current_user: @current_user)
+      assert ctx[:model].MapUserPolicies.present?
+      assert_equal ::MapUserPolicy.all.count, ctx[:model].MapUserPolicies.length
     end
 
     test 'Index No Data' do
-      assert_equal Operation::Index.call(params: { user_id: @user[:model].id })[:model].MapUserPolicies, []
+      user_id = map_user_policies(:spec).user_id
+      ::MapUserPolicy.all.each(&:destroy)
+      assert_equal [], Operation::Index.call(params: { user_id: user_id }, current_user: @current_user)[:model].MapUserPolicies
     end
   end
 end

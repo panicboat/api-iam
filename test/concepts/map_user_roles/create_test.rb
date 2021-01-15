@@ -14,17 +14,24 @@ module MapUserRoles
     end
 
     def default_params
-      { user_id: users(:fixtures).id, role_id: roles(:spec).id }
+      { user_id: users(:spec).id, role_id: roles(:spec).id }
     end
 
     def expected_attrs
-      { user_id: users(:fixtures).id, role_id: roles(:spec).id }
+      { user_id: users(:spec).id, role_id: roles(:spec).id }
+    end
+
+    test 'Permission Deny' do
+      e = assert_raises InvalidPermissions do
+        Operation::Create.call(params: default_params)
+      end
+      assert_equal ['Permissions is invalid'], JSON.parse(e.message)
     end
 
     test 'Create Data' do
       ctx = Operation::Create.call(params: default_params, current_user: @current_user)
       assert ctx.success?
-      assert_equal users(:fixtures).id, ctx[:model].user_id
+      assert_equal users(:spec).id, ctx[:model].user_id
       assert_equal roles(:spec).id, ctx[:model].role_id
     end
 

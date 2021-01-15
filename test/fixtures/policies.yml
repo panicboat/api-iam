@@ -10,3 +10,10 @@ spec:
   description: This is Policy for Spec.
   inline: false
   owner: pnb
+
+fixtures:
+  id: 00000000-0000-0000-0000-000000000002
+  name: FixturePolicy
+  description: This is Policy for Spec.
+  inline: false
+  owner: user
