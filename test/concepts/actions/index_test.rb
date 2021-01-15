@@ -29,7 +29,7 @@ module Actions
 
     test 'Index No Data' do
       ::Action.all.each(&:destroy)
-      assert_equal [], Operation::Index.call(params: { service_id: actions(:list).service_id }, current_user: @current_user)[:model].Actions
+      assert_equal [], Operation::Index.call(params: {}, current_user: @current_user)[:model].Actions
     end
   end
 end

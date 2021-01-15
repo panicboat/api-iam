@@ -2,27 +2,43 @@ require 'test_helper'
 
 module MapGroupPolicies
   class CreateTest < ActionDispatch::IntegrationTest
+    fixtures :map_group_policies, :groups, :policies
+
     setup do
-      @group = ::Groups::Operation::Create.call({ params: { name: 'admin' } })
-      @policy = ::Policies::Operation::Create.call({ params: { name: 'admin' } })
+      @current_user = JSON.parse({ name: 'Spec' }.to_json, object_class: OpenStruct)
+      WebMock.stub_request(:get, "#{ENV['HTTP_IAM_URL']}/permissions/00000000-0000-0000-0000-000000000000").to_return(
+        body: File.read("#{Rails.root}/test/fixtures/files/platform_iam_get_permission.json"),
+        status: 200,
+        headers: { 'Content-Type': 'application/json' }
+      )
     end
 
     def default_params
-      { group_id: @group[:model].id, policy_id: @policy[:model].id }
+      { group_id: groups(:spec).id, policy_id: policies(:spec).id }
     end
 
     def expected_attrs
-      { group_id: @group[:model].id, policy_id: @policy[:model].id }
+      { group_id: groups(:spec).id, policy_id: policies(:spec).id }
+    end
+
+    test 'Permission Deny' do
+      e = assert_raises InvalidPermissions do
+        Operation::Create.call(params: default_params)
+      end
+      assert_equal ['Permissions is invalid'], JSON.parse(e.message)
     end
 
     test 'Create Data' do
-      assert_pass Operation::Create, params({}), group_id: @group[:model].id
+      ctx = Operation::Create.call(params: default_params, current_user: @current_user)
+      assert ctx.success?
+      assert_equal groups(:spec).id, ctx[:model].group_id
+      assert_equal policies(:spec).id, ctx[:model].policy_id
     end
 
-    test 'Create Duplicate PolicyId' do
-      Operation::Create.call(params: default_params)
+    test 'Create Duplicate Policy' do
+      Operation::Create.call(params: default_params, current_user: @current_user)
       e = assert_raises InvalidParameters do
-        Operation::Create.call(params: default_params)
+        Operation::Create.call(params: default_params, current_user: @current_user)
       end
       assert_equal ['Policy has already been taken'], JSON.parse(e.message)
     end
