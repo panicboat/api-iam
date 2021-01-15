@@ -2,7 +2,7 @@ require 'test_helper'
 
 class MapUserRolesControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @user = ::Users::Operation::Create.call({ params: { email: 'spec@panicboat.net', name: 'Spec' } })
+    @user = ::Users::Operation::Create.call({ params: { email: 'dummy@panicboat.net', name: 'Spec' } })
     @role1 = ::Roles::Operation::Create.call({ params: { name: 'admin' } })
     @role2 = ::Roles::Operation::Create.call({ params: { name: 'normal' } })
     @map = ::MapUserRoles::Operation::Create.call(params: { user_id: @user[:model].id, role_id: @role1[:model].id })

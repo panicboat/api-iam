@@ -4,11 +4,13 @@ module MapGroupRoles::Operation
     step Contract::Build(constant: MapGroupRoles::Contract::Index)
     step Contract::Validate()
     fail :invalid_params!
+    step :permit!
     step :model
 
     def model(ctx, **)
       contract = ctx[:"contract.default"]
-      data = ::MapGroupRole.where({ group_id: contract.group_id }).paging(contract.limit, contract.offset).order(contract.order)
+      data = scrape(ctx).paging(contract.limit, contract.offset).order(contract.order)
+      data = data.where({ group_id: contract.group_id }) if contract.group_id.present?
       ctx[:model] = OpenStruct.new({ MapGroupRoles: data })
     end
   end

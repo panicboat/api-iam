@@ -2,7 +2,7 @@ require 'test_helper'
 
 class UsersControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @user = ::Users::Operation::Create.call({ params: { email: 'spec@panicboat.net', name: 'Spec' } })
+    @user = ::Users::Operation::Create.call({ params: { email: 'dummy@panicboat.net', name: 'Spec' } })
   end
 
   test 'Index' do

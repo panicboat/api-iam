@@ -2,32 +2,35 @@ require 'test_helper'
 
 module MapGroupRoles
   class IndexTest < ActionDispatch::IntegrationTest
+    fixtures :map_group_roles, :groups, :roles
+
     setup do
-      @group = ::Groups::Operation::Create.call({ params: { name: 'admin' } })
-      @role1 = ::Roles::Operation::Create.call({ params: { name: 'admin' } })
-      @role2 = ::Roles::Operation::Create.call({ params: { name: 'normal' } })
+      @current_user = JSON.parse({ name: 'Spec' }.to_json, object_class: OpenStruct)
+      WebMock.stub_request(:get, "#{ENV['HTTP_IAM_URL']}/permissions/00000000-0000-0000-0000-000000000000").to_return(
+        body: File.read("#{Rails.root}/test/fixtures/files/platform_iam_get_permission.json"),
+        status: 200,
+        headers: { 'Content-Type': 'application/json' }
+      )
     end
 
     def default_params
-      { group_id: @group[:model].id, role_id: @role1[:model].id }
+      { group_id: groups(:spec).id, role_id: roles(:spec).id }
     end
 
     def expected_attrs
-      { group_id: @group[:model].id, role_id: @role2[:model].id }
+      { group_id: groups(:spec).id, role_id: roles(:spec).id }
     end
 
     test 'Index Data' do
-      Operation::Create.call(params: default_params)
-      Operation::Create.call(params: default_params.merge({ role_id: @role2[:model].id }))
-      ctx = Operation::Index.call(params: { group_id: @group[:model].id })
-      assert_equal ctx[:model].MapGroupRoles.length, 2
-      ctx[:model].MapGroupRoles.each do |map_group_role|
-        assert_equal [@role1[:model].id, @role2[:model].id].include?(map_group_role.role_id), true
-      end
+      ctx = Operation::Index.call(params: { group_id: map_group_roles(:spec).group_id }, current_user: @current_user)
+      assert ctx[:model].MapGroupRoles.present?
+      assert_equal ::MapGroupRole.all.count, ctx[:model].MapGroupRoles.length
     end
 
     test 'Index No Data' do
-      assert_equal Operation::Index.call(params: { group_id: @group[:model].id })[:model].MapGroupRoles, []
+      group_id = map_group_roles(:spec).group_id
+      ::MapGroupRole.all.each(&:destroy)
+      assert_equal [], Operation::Index.call(params: { group_id: group_id }, current_user: @current_user)[:model].MapGroupRoles
     end
   end
 end

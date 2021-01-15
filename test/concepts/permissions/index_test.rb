@@ -7,7 +7,7 @@ module Permissions
       service2 = ::Services::Operation::Create.call(params: { name: 'spec' })
       ::Actions::Operation::Create.call(params: { service_id: service1[:model].id, name: 'IamAction', access_level: 'write' })
       ::Actions::Operation::Create.call(params: { service_id: service2[:model].id, name: 'SpecAction', access_level: 'write' })
-      @user = ::Users::Operation::Create.call({ params: { email: 'spec@panicboat.net', name: 'Spec' } })
+      @user = ::Users::Operation::Create.call({ params: { email: 'dummy@panicboat.net', name: 'Spec' } })
       @group1 = ::Groups::Operation::Create.call(params: { name: 'group1' })
       @group2 = ::Groups::Operation::Create.call(params: { name: 'group2' })
       @policy1 = ::Policies::Operation::Create.call(params: { name: 'SpecPolicy1', statements: [{ effect: 'allow', actions: ['iam:*'], resources: ['prn:panicboat:platform:iam:group/bc2edb53-551c-*'] }] })

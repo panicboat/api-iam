@@ -14,11 +14,11 @@ module Users
     end
 
     def default_params
-      { id: '10000000-0000-0000-0000-000000000000', email: 'spec@panicboat.net', name: 'Spec' }
+      { id: '10000000-0000-0000-0000-000000000000', email: 'dummy@panicboat.net', name: 'Spec' }
     end
 
     def expected_attrs
-      { id: '10000000-0000-0000-0000-000000000000', email: 'spec@panicboat.net', name: 'Spec' }
+      { id: '10000000-0000-0000-0000-000000000000', email: 'dummy@panicboat.net', name: 'Spec' }
     end
 
     test 'Permission Deny' do
