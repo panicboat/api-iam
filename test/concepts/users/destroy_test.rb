@@ -23,15 +23,15 @@ module Users
 
     test 'Permission Deny' do
       e = assert_raises InvalidPermissions do
-        Operation::Destroy.call(params: { id: users(:administrator).id })
+        Operation::Destroy.call(params: { id: users(:spec).id })
       end
       assert_equal ['Permissions is invalid'], JSON.parse(e.message)
     end
 
     test 'Destory Data' do
-      ctx = Operation::Destroy.call(params: { id: users(:administrator).id }, current_user: @current_user)
+      ctx = Operation::Destroy.call(params: { id: users(:spec).id }, current_user: @current_user)
       assert ctx.success?
-      assert_equal [], ::User.where({ id: users(:administrator).id })
+      assert_equal [], ::User.where({ id: users(:spec).id })
     end
 
     test 'Destroy No Data' do

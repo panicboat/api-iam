@@ -13,3 +13,8 @@ fixtures:
   id: 00000000-0000-0000-0000-000000000002
   name: FixtureGroup
   description: This is Group for Fixture.
+
+standalone:
+  id: 00000000-0000-0000-0000-000000000004
+  name: Standalone
+  description: This is Group for Standalone.

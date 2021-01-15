@@ -15,3 +15,9 @@ fixture:
   name: FixtureRole
   description: This is Role for Fixture.
   owner: user
+
+standalone:
+  id: 00000000-0000-0000-0000-000000000003
+  name: StandaloneRole
+  description: This is Role for Standalone.
+  owner: user

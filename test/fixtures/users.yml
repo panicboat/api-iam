@@ -16,8 +16,8 @@ fixtures:
   name: panicboat
   image: https://image.panicboat.net/image2.png
 
-administrator:
+standalone:
   id: 00000000-0000-0000-0000-000000000003
-  email: administrator@panicboat.net
-  name: panicboat
+  email: standalone@panicboat.net
+  name: standalone
   image: https://image.panicboat.net/image3.png

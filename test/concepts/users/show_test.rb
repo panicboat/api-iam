@@ -22,8 +22,8 @@ module Users
     end
 
     test 'Show Data' do
-      ctx = Operation::Show.call(params: { id: users(:administrator).id }, current_user: @current_user)
-      assert_equal users(:administrator).name, ctx[:model].name
+      ctx = Operation::Show.call(params: { id: users(:spec).id }, current_user: @current_user)
+      assert_equal users(:spec).name, ctx[:model].name
     end
 
     test 'Show No Data' do

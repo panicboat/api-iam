@@ -4,7 +4,15 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-iam:
+spec:
   id: 00000000-0000-0000-0000-000000000001
-  name: iam
-  description: Identity and Access Management.
+  name: spec
+
+fixture:
+  id: 00000000-0000-0000-0000-000000000002
+  name: fixture
+
+standalone:
+  id: 00000000-0000-0000-0000-000000000003
+  name: standalone
+  description: standalone

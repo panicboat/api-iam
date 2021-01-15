@@ -14,11 +14,11 @@ module Services
     end
 
     def default_params
-      { id: '10000000-0000-0000-0000-000000000000', name: 'Spec', description: 'This is description' }
+      { id: '10000000-0000-0000-0000-000000000000', name: 'Service', description: 'This is description' }
     end
 
     def expected_attrs
-      { id: '10000000-0000-0000-0000-000000000000', name: 'Spec', description: 'This is description' }
+      { id: '10000000-0000-0000-0000-000000000000', name: 'Service', description: 'This is description' }
     end
 
     test 'Index Data' do

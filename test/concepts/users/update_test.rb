@@ -23,13 +23,13 @@ module Users
 
     test 'Permission Deny : No Session' do
       e = assert_raises InvalidPermissions do
-        Operation::Update.call(params: { id: users(:administrator).id, name: 'This is name.' })
+        Operation::Update.call(params: { id: users(:spec).id, name: 'This is name.' })
       end
       assert_equal ['Permissions is invalid'], JSON.parse(e.message)
     end
 
     test 'Update Data' do
-      ctx = Operation::Update.call(params: { id: users(:administrator).id, name: 'This is name.' }, current_user: @current_user)
+      ctx = Operation::Update.call(params: { id: users(:spec).id, name: 'This is name.' }, current_user: @current_user)
       assert ctx.success?
       assert_equal 'This is name.', ctx[:model].name
     end

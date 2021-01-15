@@ -14,24 +14,24 @@ module Services
     end
 
     def default_params
-      { id: '10000000-0000-0000-0000-000000000000', name: 'Spec', description: 'This is description' }
+      { id: '10000000-0000-0000-0000-000000000000', name: 'Service', description: 'This is description' }
     end
 
     def expected_attrs
-      { id: '10000000-0000-0000-0000-000000000000', name: 'Spec', description: 'This is description' }
+      { id: '10000000-0000-0000-0000-000000000000', name: 'Service', description: 'This is description' }
     end
 
     test 'Permission Deny' do
       e = assert_raises InvalidPermissions do
-        Operation::Destroy.call(params: { id: services(:iam).id })
+        Operation::Destroy.call(params: { id: services(:spec).id })
       end
       assert_equal ['Permissions is invalid'], JSON.parse(e.message)
     end
 
     test 'Destory Data' do
-      ctx = Operation::Destroy.call(params: { id: services(:iam).id }, current_user: @current_user)
+      ctx = Operation::Destroy.call(params: { id: services(:spec).id }, current_user: @current_user)
       assert ctx.success?
-      assert_equal [], ::Service.where({ id: services(:iam).id })
+      assert_equal [], ::Service.where({ id: services(:spec).id })
     end
 
     test 'Destroy No Data' do

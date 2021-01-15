@@ -4,3 +4,12 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
+spec:
+  id: 1
+  statement_id: 00000000-0000-0000-0000-000000000001
+  action: spec:Get*
+
+standalone:
+  id: 2
+  statement_id: 00000000-0000-0000-0000-000000000002
+  action: standalone:*

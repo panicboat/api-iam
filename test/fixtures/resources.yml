@@ -4,3 +4,17 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
+spec:
+  id: 1
+  statement_id: 00000000-0000-0000-0000-000000000001
+  name: prn:panicboat:platform:iam:service/00000000-0000-0000-0000-000000000001
+
+fixture:
+  id: 2
+  statement_id: 00000000-0000-0000-0000-000000000001
+  name: prn:panicboat:platform:iam:action/00000000-0000-0000-0000-000000000002
+
+standalone:
+  id: 3
+  statement_id: 00000000-0000-0000-0000-000000000002
+  name: prn:panicboat:platform:iam:role/00000000-0000-0000-0000-*

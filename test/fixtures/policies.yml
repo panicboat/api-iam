@@ -14,6 +14,13 @@ spec:
 fixtures:
   id: 00000000-0000-0000-0000-000000000002
   name: FixturePolicy
-  description: This is Policy for Spec.
+  description: This is Policy for Fixture.
+  inline: false
+  owner: user
+
+standalone:
+  id: 00000000-0000-0000-0000-000000000003
+  name: StandalonePolicy
+  description: This is Policy for Standalone.
   inline: false
   owner: user

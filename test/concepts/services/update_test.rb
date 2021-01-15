@@ -14,22 +14,22 @@ module Services
     end
 
     def default_params
-      { id: '10000000-0000-0000-0000-000000000000', name: 'Spec', description: 'This is description' }
+      { id: '10000000-0000-0000-0000-000000000000', name: 'Service', description: 'This is description' }
     end
 
     def expected_attrs
-      { id: '10000000-0000-0000-0000-000000000000', name: 'Spec', description: 'This is description' }
+      { id: '10000000-0000-0000-0000-000000000000', name: 'Service', description: 'This is description' }
     end
 
     test 'Permission Deny : No Session' do
       e = assert_raises InvalidPermissions do
-        Operation::Update.call(params: { id: services(:iam).id, name: 'This is name.' })
+        Operation::Update.call(params: { id: services(:spec).id, name: 'This is name.' })
       end
       assert_equal ['Permissions is invalid'], JSON.parse(e.message)
     end
 
     test 'Update Data' do
-      ctx = Operation::Update.call(params: { id: services(:iam).id, name: 'This is name.' }, current_user: @current_user)
+      ctx = Operation::Update.call(params: { id: services(:spec).id, name: 'This is name.' }, current_user: @current_user)
       assert ctx.success?
       assert_equal 'This is name.', ctx[:model].name
     end

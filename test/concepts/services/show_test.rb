@@ -14,16 +14,16 @@ module Services
     end
 
     def default_params
-      { id: '10000000-0000-0000-0000-000000000000', name: 'Spec', description: 'This is description' }
+      { id: '10000000-0000-0000-0000-000000000000', name: 'Service', description: 'This is description' }
     end
 
     def expected_attrs
-      { id: '10000000-0000-0000-0000-000000000000', name: 'Spec', description: 'This is description' }
+      { id: '10000000-0000-0000-0000-000000000000', name: 'Service', description: 'This is description' }
     end
 
     test 'Show Data' do
-      ctx = Operation::Show.call(params: { id: services(:iam).id }, current_user: @current_user)
-      assert_equal services(:iam).name, ctx[:model].name
+      ctx = Operation::Show.call(params: { id: services(:spec).id }, current_user: @current_user)
+      assert_equal services(:spec).name, ctx[:model].name
     end
 
     test 'Show No Data' do
