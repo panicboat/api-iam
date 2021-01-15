@@ -4,11 +4,13 @@ module MapUserPolicies::Operation
     step Contract::Build(constant: MapUserPolicies::Contract::Index)
     step Contract::Validate()
     fail :invalid_params!
+    step :permit!
     step :model
 
     def model(ctx, **)
       contract = ctx[:"contract.default"]
-      data = ::MapUserPolicy.where({ user_id: contract.user_id }).paging(contract.limit, contract.offset).order(contract.order)
+      data = scrape(ctx).paging(contract.limit, contract.offset).order(contract.order)
+      data = data.where({ user_id: contract.user_id }) if contract.user_id.present?
       ctx[:model] = OpenStruct.new({ MapUserPolicies: data })
     end
   end

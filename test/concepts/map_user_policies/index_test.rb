@@ -2,18 +2,23 @@ require 'test_helper'
 
 module MapUserPolicies
   class IndexTest < ActionDispatch::IntegrationTest
+    fixtures :map_user_policies, :users, :policies
+
     setup do
-      @user = ::Users::Operation::Create.call({ params: { email: 'spec@panicboat.net', name: 'Spec' } })
-      @policy1 = ::Policies::Operation::Create.call({ params: { name: 'admin' } })
-      @policy2 = ::Policies::Operation::Create.call({ params: { name: 'normal' } })
+      @current_user = JSON.parse({ name: 'Spec' }.to_json, object_class: OpenStruct)
+      WebMock.stub_request(:get, "#{ENV['HTTP_IAM_URL']}/permissions/00000000-0000-0000-0000-000000000000").to_return(
+        body: File.read("#{Rails.root}/test/fixtures/files/platform_iam_get_permission.json"),
+        status: 200,
+        headers: { 'Content-Type': 'application/json' }
+      )
     end
 
     def default_params
-      { user_id: @user[:model].id, policy_id: @policy1[:model].id }
+      { user_id: users(:fixtures).id, policy_id: policies(:spec).id }
     end
 
     def expected_attrs
-      { user_id: @user[:model].id, policy_id: @policy2[:model].id }
+      { user_id: users(:fixtures).id, policy_id: policies(:spec).id }
     end
 
     test 'Index Data' do
