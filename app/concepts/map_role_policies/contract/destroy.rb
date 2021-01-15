@@ -5,10 +5,5 @@ module MapRolePolicies::Contract
 
     validates :role_id,   presence: true, format: { with: FORMAT_UUID }
     validates :policy_id, presence: true, format: { with: FORMAT_UUID }
-    validate  :exists
-
-    def exists
-      errors.add(:role_policy, I18n.t('errors.messages.invalid')) if ::MapRolePolicy.where({ role_id: role_id, policy_id: policy_id }).blank?
-    end
   end
 end

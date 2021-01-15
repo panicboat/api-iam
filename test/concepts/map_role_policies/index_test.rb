@@ -2,32 +2,35 @@ require 'test_helper'
 
 module MapRolePolicies
   class IndexTest < ActionDispatch::IntegrationTest
+    fixtures :map_role_policies, :roles, :policies
+
     setup do
-      @role = ::Roles::Operation::Create.call({ params: { name: 'admin' } })
-      @policy1 = ::Policies::Operation::Create.call({ params: { name: 'admin' } })
-      @policy2 = ::Policies::Operation::Create.call({ params: { name: 'normal' } })
+      @current_user = JSON.parse({ name: 'Spec' }.to_json, object_class: OpenStruct)
+      WebMock.stub_request(:get, "#{ENV['HTTP_IAM_URL']}/permissions/00000000-0000-0000-0000-000000000000").to_return(
+        body: File.read("#{Rails.root}/test/fixtures/files/platform_iam_get_permission.json"),
+        status: 200,
+        headers: { 'Content-Type': 'application/json' }
+      )
     end
 
     def default_params
-      { role_id: @role[:model].id, policy_id: @policy1[:model].id }
+      { role_id: roles(:spec).id, policy_id: policies(:spec).id }
     end
 
     def expected_attrs
-      { role_id: @role[:model].id, policy_id: @policy2[:model].id }
+      { role_id: roles(:spec).id, policy_id: policies(:spec).id }
     end
 
     test 'Index Data' do
-      Operation::Create.call(params: default_params)
-      Operation::Create.call(params: default_params.merge({ policy_id: @policy2[:model].id }))
-      ctx = Operation::Index.call(params: { role_id: @role[:model].id })
-      assert_equal ctx[:model].MapRolePolicies.length, 2
-      ctx[:model].MapRolePolicies.each do |map_role_policy|
-        assert_equal [@policy1[:model].id, @policy2[:model].id].include?(map_role_policy.policy_id), true
-      end
+      ctx = Operation::Index.call(params: { user_id: map_user_roles(:spec).user_id }, current_user: @current_user)
+      assert ctx[:model].MapRolePolicies.present?
+      assert_equal ::MapUserRole.all.count, ctx[:model].MapRolePolicies.length
     end
 
     test 'Index No Data' do
-      assert_equal Operation::Index.call(params: { role_id: @role[:model].id })[:model].MapRolePolicies, []
+      user_id = map_user_roles(:spec).user_id
+      ::MapUserRole.all.each(&:destroy)
+      assert_equal [], Operation::Index.call(params: { user_id: user_id }, current_user: @current_user)[:model].MapRolePolicies
     end
   end
 end
