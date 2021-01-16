@@ -1,25 +1,34 @@
 require 'test_helper'
 
 class MapUserRolesControllerTest < ActionDispatch::IntegrationTest
-  setup do
-    @user = ::Users::Operation::Create.call({ params: { email: 'dummy@panicboat.net', name: 'Spec' } })
-    @role1 = ::Roles::Operation::Create.call({ params: { name: 'admin' } })
-    @role2 = ::Roles::Operation::Create.call({ params: { name: 'normal' } })
-    @map = ::MapUserRoles::Operation::Create.call(params: { user_id: @user[:model].id, role_id: @role1[:model].id })
+  fixtures :users, :roles, :map_user_roles
+
+  def setup
+    WebMock.stub_request(:get, "#{ENV['HTTP_IAM_URL']}/permissions/00000000-0000-0000-0000-000000000000").to_return(
+      body: File.read("#{Rails.root}/test/fixtures/files/platform_iam_get_permission.json"),
+      status: 200,
+      headers: { 'Content-Type': 'application/json' }
+    )
   end
 
   test 'Index' do
-    get "/users/#{@user[:model].id}/roles"
+    ::ApplicationController.stub_any_instance(:_session, users(:standalone)) do
+      get "/users/#{users(:spec).id}/roles"
+    end
     assert_response :success
   end
 
   test 'Create' do
-    post "/users/#{@user[:model].id}/roles", params: { role_id: @role2[:model].id }
+    ::ApplicationController.stub_any_instance(:_session, users(:standalone)) do
+      post "/users/#{users(:spec).id}/roles", params: { role_id: roles(:spec).id }
+    end
     assert_response :success
   end
 
   test 'Destroy' do
-    delete "/users/#{@user[:model].id}/roles/#{@role1[:model].id}"
+    ::ApplicationController.stub_any_instance(:_session, users(:standalone)) do
+      delete "/users/#{map_user_roles(:spec).user_id}/roles/#{map_user_roles(:spec).role_id}"
+    end
     assert_response :success
   end
 end

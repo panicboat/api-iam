@@ -1,32 +1,48 @@
 require 'test_helper'
 
 class ServicesControllerTest < ActionDispatch::IntegrationTest
-  setup do
-    @service = ::Services::Operation::Create.call({ params: { name: 'iam', description: 'desc' } })
+  fixtures :services, :users
+
+  def setup
+    WebMock.stub_request(:get, "#{ENV['HTTP_IAM_URL']}/permissions/00000000-0000-0000-0000-000000000000").to_return(
+      body: File.read("#{Rails.root}/test/fixtures/files/platform_iam_get_permission.json"),
+      status: 200,
+      headers: { 'Content-Type': 'application/json' }
+    )
   end
 
   test 'Index' do
-    get '/services'
+    ::ApplicationController.stub_any_instance(:_session, users(:standalone)) do
+      get '/services'
+    end
     assert_response :success
   end
 
   test 'Show' do
-    get "/services/#{@service[:model].id}"
+    ::ApplicationController.stub_any_instance(:_session, users(:standalone)) do
+      get "/services/#{services(:spec).id}"
+    end
     assert_response :success
   end
 
   test 'Create' do
-    post '/services', params: { name: 'spec', description: 'desc' }
+    ::ApplicationController.stub_any_instance(:_session, users(:standalone)) do
+      post '/services', params: { name: 'service', description: 'desc' }
+    end
     assert_response :success
   end
 
   test 'Update' do
-    patch "/services/#{@service[:model].id}", params: { name: 'spec' }
+    ::ApplicationController.stub_any_instance(:_session, users(:standalone)) do
+      patch "/services/#{services(:spec).id}", params: { name: 'service' }
+    end
     assert_response :success
   end
 
   test 'Destroy' do
-    delete "/services/#{@service[:model].id}"
+    ::ApplicationController.stub_any_instance(:_session, users(:standalone)) do
+      delete "/services/#{services(:spec).id}"
+    end
     assert_response :success
   end
 end

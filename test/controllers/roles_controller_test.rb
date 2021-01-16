@@ -1,32 +1,48 @@
 require 'test_helper'
 
 class RolesControllerTest < ActionDispatch::IntegrationTest
-  setup do
-    @role = ::Roles::Operation::Create.call({ params: { name: 'admin', description: 'desc' } })
+  fixtures :roles, :users
+
+  def setup
+    WebMock.stub_request(:get, "#{ENV['HTTP_IAM_URL']}/permissions/00000000-0000-0000-0000-000000000000").to_return(
+      body: File.read("#{Rails.root}/test/fixtures/files/platform_iam_get_permission.json"),
+      status: 200,
+      headers: { 'Content-Type': 'application/json' }
+    )
   end
 
   test 'Index' do
-    get '/roles'
+    ::ApplicationController.stub_any_instance(:_session, users(:standalone)) do
+      get '/roles'
+    end
     assert_response :success
   end
 
   test 'Show' do
-    get "/roles/#{@role[:model].id}"
+    ::ApplicationController.stub_any_instance(:_session, users(:standalone)) do
+      get "/roles/#{roles(:spec).id}"
+    end
     assert_response :success
   end
 
   test 'Create' do
-    post '/roles', params: { name: 'spec', description: 'desc' }
+    ::ApplicationController.stub_any_instance(:_session, users(:standalone)) do
+      post '/roles', params: { name: 'spec', description: 'desc' }
+    end
     assert_response :success
   end
 
   test 'Update' do
-    patch "/roles/#{@role[:model].id}", params: { name: 'spec' }
+    ::ApplicationController.stub_any_instance(:_session, users(:standalone)) do
+      patch "/roles/#{roles(:spec).id}", params: { name: 'spec' }
+    end
     assert_response :success
   end
 
   test 'Destroy' do
-    delete "/roles/#{@role[:model].id}"
+    ::ApplicationController.stub_any_instance(:_session, users(:standalone)) do
+      delete "/roles/#{roles(:spec).id}"
+    end
     assert_response :success
   end
 end

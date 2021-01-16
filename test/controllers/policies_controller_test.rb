@@ -1,32 +1,48 @@
 require 'test_helper'
 
 class PoliciesControllerTest < ActionDispatch::IntegrationTest
-  setup do
-    @policy = ::Policies::Operation::Create.call({ params: { name: 'Administrators', inline: false, owner: 'user', statements: [] } })
+  fixtures :policies, :users
+
+  def setup
+    WebMock.stub_request(:get, "#{ENV['HTTP_IAM_URL']}/permissions/00000000-0000-0000-0000-000000000000").to_return(
+      body: File.read("#{Rails.root}/test/fixtures/files/platform_iam_get_permission.json"),
+      status: 200,
+      headers: { 'Content-Type': 'application/json' }
+    )
   end
 
   test 'Index' do
-    get '/policies'
+    ::ApplicationController.stub_any_instance(:_session, users(:standalone)) do
+      get '/policies'
+    end
     assert_response :success
   end
 
   test 'Show' do
-    get "/policies/#{@policy[:model].id}"
+    ::ApplicationController.stub_any_instance(:_session, users(:standalone)) do
+      get "/policies/#{policies(:spec).id}"
+    end
     assert_response :success
   end
 
   test 'Create' do
-    post '/policies', params: { name: 'spec', description: 'desc' }
+    ::ApplicationController.stub_any_instance(:_session, users(:standalone)) do
+      post '/policies', params: { name: 'spec', description: 'desc' }
+    end
     assert_response :success
   end
 
   test 'Update' do
-    patch "/policies/#{@policy[:model].id}", params: { name: 'spec' }
+    ::ApplicationController.stub_any_instance(:_session, users(:standalone)) do
+      patch "/policies/#{policies(:spec).id}", params: { name: 'spec' }
+    end
     assert_response :success
   end
 
   test 'Destroy' do
-    delete "/policies/#{@policy[:model].id}"
+    ::ApplicationController.stub_any_instance(:_session, users(:standalone)) do
+      delete "/policies/#{policies(:spec).id}"
+    end
     assert_response :success
   end
 end

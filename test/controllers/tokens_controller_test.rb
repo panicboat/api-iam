@@ -1,7 +1,12 @@
 require 'test_helper'
 
 class TokensControllerTest < ActionDispatch::IntegrationTest
-  # test "the truth" do
-  #   assert true
-  # end
+  fixtures :users
+
+  test 'Index' do
+    ::ApplicationController.stub_any_instance(:_session, users(:standalone)) do
+      get '/tokens'
+    end
+    assert_response :success
+  end
 end

@@ -1,33 +1,48 @@
 require 'test_helper'
 
 class ActionsControllerTest < ActionDispatch::IntegrationTest
-  setup do
-    @service = ::Services::Operation::Create.call({ params: { name: 'iam', description: 'desc' } })
-    @action = ::Actions::Operation::Create.call({ params: { service_id: @service[:model].id, name: 'GetAny', access_level: 'read' } })
+  fixtures :actions, :users
+
+  def setup
+    WebMock.stub_request(:get, "#{ENV['HTTP_IAM_URL']}/permissions/00000000-0000-0000-0000-000000000000").to_return(
+      body: File.read("#{Rails.root}/test/fixtures/files/platform_iam_get_permission.json"),
+      status: 200,
+      headers: { 'Content-Type': 'application/json' }
+    )
   end
 
   test 'Index' do
-    get "/services/#{@service[:model].id}/actions"
+    ::ApplicationController.stub_any_instance(:_session, users(:standalone)) do
+      get "/services/#{actions(:read).service_id}/actions"
+    end
     assert_response :success
   end
 
   test 'Show' do
-    get "/services/#{@service[:model].id}/actions/#{@action[:model].id}"
+    ::ApplicationController.stub_any_instance(:_session, users(:standalone)) do
+      get "/services/#{actions(:read).service_id}/actions/#{actions(:read).id}"
+    end
     assert_response :success
   end
 
   test 'Create' do
-    post "/services/#{@service[:model].id}/actions", params: { name: 'spec', description: 'desc', access_level: 'list' }
+    ::ApplicationController.stub_any_instance(:_session, users(:standalone)) do
+      post "/services/#{actions(:read).service_id}/actions", params: { name: 'spec', description: 'desc', access_level: 'list' }
+    end
     assert_response :success
   end
 
   test 'Update' do
-    patch "/services/#{@service[:model].id}/actions/#{@action[:model].id}", params: { name: 'spec' }
+    ::ApplicationController.stub_any_instance(:_session, users(:standalone)) do
+      patch "/services/#{actions(:read).service_id}/actions/#{actions(:read).id}", params: { name: 'spec' }
+    end
     assert_response :success
   end
 
   test 'Destroy' do
-    delete "/services/#{@service[:model].id}/actions/#{@action[:model].id}"
+    ::ApplicationController.stub_any_instance(:_session, users(:standalone)) do
+      delete "/services/#{actions(:read).service_id}/actions/#{actions(:read).id}"
+    end
     assert_response :success
   end
 end

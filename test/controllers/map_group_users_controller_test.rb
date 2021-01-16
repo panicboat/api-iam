@@ -1,25 +1,34 @@
 require 'test_helper'
 
 class MapGroupUsersControllerTest < ActionDispatch::IntegrationTest
-  setup do
-    @group = ::Groups::Operation::Create.call({ params: { name: 'admin' } })
-    @user1 = ::Users::Operation::Create.call({ params: { email: 'spec1@panicboat.net', name: 'Spec1' } })
-    @user2 = ::Users::Operation::Create.call({ params: { email: 'spec2@panicboat.net', name: 'Spec2' } })
-    @map = ::MapGroupUsers::Operation::Create.call(params: { group_id: @group[:model].id, user_id: @user1[:model].id })
+  fixtures :groups, :users, :map_group_users, :users
+
+  def setup
+    WebMock.stub_request(:get, "#{ENV['HTTP_IAM_URL']}/permissions/00000000-0000-0000-0000-000000000000").to_return(
+      body: File.read("#{Rails.root}/test/fixtures/files/platform_iam_get_permission.json"),
+      status: 200,
+      headers: { 'Content-Type': 'application/json' }
+    )
   end
 
   test 'Index' do
-    get "/groups/#{@group[:model].id}/users"
+    ::ApplicationController.stub_any_instance(:_session, users(:standalone)) do
+      get "/groups/#{groups(:spec).id}/users"
+    end
     assert_response :success
   end
 
   test 'Create' do
-    post "/groups/#{@group[:model].id}/users", params: { user_id: @user2[:model].id }
+    ::ApplicationController.stub_any_instance(:_session, users(:standalone)) do
+      post "/groups/#{groups(:spec).id}/users", params: { user_id: users(:spec).id }
+    end
     assert_response :success
   end
 
   test 'Destroy' do
-    delete "/groups/#{@group[:model].id}/users/#{@user1[:model].id}"
+    ::ApplicationController.stub_any_instance(:_session, users(:standalone)) do
+      delete "/groups/#{map_group_users(:spec).group_id}/users/#{map_group_users(:spec).user_id}"
+    end
     assert_response :success
   end
 end
