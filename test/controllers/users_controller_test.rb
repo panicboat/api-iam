@@ -4,7 +4,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   fixtures :users
 
   def setup
-    WebMock.stub_request(:get, "#{ENV['HTTP_IAM_URL']}/permissions/00000000-0000-0000-0000-000000000000").to_return(
+    WebMock.stub_request(:get, %r{#{ENV['HTTP_IAM_URL']}/permissions/}).to_return(
       body: File.read("#{Rails.root}/test/fixtures/files/platform_iam_get_permission.json"),
       status: 200,
       headers: { 'Content-Type': 'application/json' }

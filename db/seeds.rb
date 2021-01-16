@@ -6,166 +6,151 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-user = Users::Operation::Create.call(params: { email: 'admin@panicboat.net', name: 'Administrator' })
-statements = [{ effect: 'allow', actions: ['*'], resources: ['*'] }]
-policy = Policies::Operation::Create.call(params: { name: 'admin', inline: true, owner: 'user', statements: statements })
-MapUserPolicies::Operation::Create.call(params: { user_id: user[:model].id, policy_id: policy[:model].id })
+services = Service.create([
+                            { id: Identity.uuid(Service), name: 'iam', description: '' },
+                            { id: Identity.uuid(Service), name: 'advertisements', description: '' },
+                          ])
 
 #--------------------------------------------------------------------
 # IAM
 #--------------------------------------------------------------------
-iam = Services::Operation::Create.call(params: { name: 'iam', description: '' })
-
-## Role
-Actions::Operation::Create.call(params: { service_id: iam[:model].id, name: 'ListRole',    description: '',  access_level: 'list' })
-Actions::Operation::Create.call(params: { service_id: iam[:model].id, name: 'GetRole',     description: '',  access_level: 'read' })
-Actions::Operation::Create.call(params: { service_id: iam[:model].id, name: 'CreateRole',  description: '',  access_level: 'write' })
-Actions::Operation::Create.call(params: { service_id: iam[:model].id, name: 'UpdateRole',  description: '',  access_level: 'write' })
-Actions::Operation::Create.call(params: { service_id: iam[:model].id, name: 'DeleteRole',  description: '',  access_level: 'write' })
-## Policy
-Actions::Operation::Create.call(params: { service_id: iam[:model].id, name: 'ListPolicy',    description: '',  access_level: 'list' })
-Actions::Operation::Create.call(params: { service_id: iam[:model].id, name: 'GetPolicy',     description: '',  access_level: 'read' })
-Actions::Operation::Create.call(params: { service_id: iam[:model].id, name: 'CreatePolicy',  description: '',  access_level: 'write' })
-Actions::Operation::Create.call(params: { service_id: iam[:model].id, name: 'UpdatePolicy',  description: '',  access_level: 'write' })
-Actions::Operation::Create.call(params: { service_id: iam[:model].id, name: 'DeletePolicy',  description: '',  access_level: 'write' })
-## MapRolePolicy
-Actions::Operation::Create.call(params: { service_id: iam[:model].id, name: 'ListRolePolicy',    description: '',  access_level: 'list' })
-Actions::Operation::Create.call(params: { service_id: iam[:model].id, name: 'GetRolePolicy',     description: '',  access_level: 'read' })
-Actions::Operation::Create.call(params: { service_id: iam[:model].id, name: 'CreateRolePolicy',  description: '',  access_level: 'write' })
-Actions::Operation::Create.call(params: { service_id: iam[:model].id, name: 'DeleteRolePolicy',  description: '',  access_level: 'write' })
-
-## Group
-Actions::Operation::Create.call(params: { service_id: iam[:model].id, name: 'ListGroup',   description: '',  access_level: 'list' })
-Actions::Operation::Create.call(params: { service_id: iam[:model].id, name: 'GetGroup',    description: '',  access_level: 'read' })
-Actions::Operation::Create.call(params: { service_id: iam[:model].id, name: 'CreateGroup', description: '',  access_level: 'write' })
-Actions::Operation::Create.call(params: { service_id: iam[:model].id, name: 'UpdateGroup', description: '',  access_level: 'write' })
-Actions::Operation::Create.call(params: { service_id: iam[:model].id, name: 'DeleteGroup', description: '',  access_level: 'write' })
-## User
-Actions::Operation::Create.call(params: { service_id: iam[:model].id, name: 'ListUser',    description: '',  access_level: 'list' })
-Actions::Operation::Create.call(params: { service_id: iam[:model].id, name: 'GetUser',     description: '',  access_level: 'read' })
-Actions::Operation::Create.call(params: { service_id: iam[:model].id, name: 'CreateUser',  description: '',  access_level: 'write' })
-Actions::Operation::Create.call(params: { service_id: iam[:model].id, name: 'UpdateUser',  description: '',  access_level: 'write' })
-Actions::Operation::Create.call(params: { service_id: iam[:model].id, name: 'DeleteUser',  description: '',  access_level: 'write' })
-## MapGroupUser
-Actions::Operation::Create.call(params: { service_id: iam[:model].id, name: 'ListGroupUser',   description: '',  access_level: 'list' })
-Actions::Operation::Create.call(params: { service_id: iam[:model].id, name: 'GetGroupUser',    description: '',  access_level: 'read' })
-Actions::Operation::Create.call(params: { service_id: iam[:model].id, name: 'CreateGroupUser', description: '',  access_level: 'write' })
-Actions::Operation::Create.call(params: { service_id: iam[:model].id, name: 'DeleteGroupUser', description: '',  access_level: 'write' })
-
-## MapGroupRole
-Actions::Operation::Create.call(params: { service_id: iam[:model].id, name: 'ListGroupRole',   description: '',  access_level: 'list' })
-Actions::Operation::Create.call(params: { service_id: iam[:model].id, name: 'GetGroupRole',    description: '',  access_level: 'read' })
-Actions::Operation::Create.call(params: { service_id: iam[:model].id, name: 'CreateGroupRole', description: '',  access_level: 'write' })
-Actions::Operation::Create.call(params: { service_id: iam[:model].id, name: 'DeleteGroupRole', description: '',  access_level: 'write' })
-## MapGroupPolicy
-Actions::Operation::Create.call(params: { service_id: iam[:model].id, name: 'ListGroupPolicy',   description: '',  access_level: 'list' })
-Actions::Operation::Create.call(params: { service_id: iam[:model].id, name: 'GetGroupPolicy',    description: '',  access_level: 'read' })
-Actions::Operation::Create.call(params: { service_id: iam[:model].id, name: 'CreateGroupPolicy', description: '',  access_level: 'write' })
-Actions::Operation::Create.call(params: { service_id: iam[:model].id, name: 'DeleteGroupPolicy', description: '',  access_level: 'write' })
-
-## MapUserRole
-Actions::Operation::Create.call(params: { service_id: iam[:model].id, name: 'ListUserRole',    description: '',  access_level: 'list' })
-Actions::Operation::Create.call(params: { service_id: iam[:model].id, name: 'GetUserRole',     description: '',  access_level: 'read' })
-Actions::Operation::Create.call(params: { service_id: iam[:model].id, name: 'CreateUserRole',  description: '',  access_level: 'write' })
-Actions::Operation::Create.call(params: { service_id: iam[:model].id, name: 'DeleteUserRole',  description: '',  access_level: 'write' })
-## MapUserPolicy
-Actions::Operation::Create.call(params: { service_id: iam[:model].id, name: 'ListUserPolicy',    description: '',  access_level: 'list' })
-Actions::Operation::Create.call(params: { service_id: iam[:model].id, name: 'GetUserPolicy',     description: '',  access_level: 'read' })
-Actions::Operation::Create.call(params: { service_id: iam[:model].id, name: 'CreateUserPolicy',  description: '',  access_level: 'write' })
-Actions::Operation::Create.call(params: { service_id: iam[:model].id, name: 'DeleteUserPolicy',  description: '',  access_level: 'write' })
+Action.create([
+                ## Group
+                { id: Identity.uuid(Action), service: services.first, name: 'ListGroup',   description: '',  access_level: 'list' },
+                { id: Identity.uuid(Action), service: services.first, name: 'GetGroup',    description: '',  access_level: 'read' },
+                { id: Identity.uuid(Action), service: services.first, name: 'CreateGroup', description: '',  access_level: 'write' },
+                { id: Identity.uuid(Action), service: services.first, name: 'UpdateGroup', description: '',  access_level: 'write' },
+                { id: Identity.uuid(Action), service: services.first, name: 'DeleteGroup', description: '',  access_level: 'write' },
+                ## MapGroupPolicy
+                { id: Identity.uuid(Action), service: services.first, name: 'ListGroupPolicy',   description: '',  access_level: 'list' },
+                { id: Identity.uuid(Action), service: services.first, name: 'GetGroupPolicy',    description: '',  access_level: 'read' },
+                { id: Identity.uuid(Action), service: services.first, name: 'CreateGroupPolicy', description: '',  access_level: 'write' },
+                { id: Identity.uuid(Action), service: services.first, name: 'DeleteGroupPolicy', description: '',  access_level: 'write' },
+                ## MapGroupRole
+                { id: Identity.uuid(Action), service: services.first, name: 'ListGroupRole',   description: '',  access_level: 'list' },
+                { id: Identity.uuid(Action), service: services.first, name: 'GetGroupRole',    description: '',  access_level: 'read' },
+                { id: Identity.uuid(Action), service: services.first, name: 'CreateGroupRole', description: '',  access_level: 'write' },
+                { id: Identity.uuid(Action), service: services.first, name: 'DeleteGroupRole', description: '',  access_level: 'write' },
+                ## MapGroupUser
+                { id: Identity.uuid(Action), service: services.first, name: 'ListGroupUser',   description: '',  access_level: 'list' },
+                { id: Identity.uuid(Action), service: services.first, name: 'GetGroupUser',    description: '',  access_level: 'read' },
+                { id: Identity.uuid(Action), service: services.first, name: 'CreateGroupUser', description: '',  access_level: 'write' },
+                { id: Identity.uuid(Action), service: services.first, name: 'DeleteGroupUser', description: '',  access_level: 'write' },
+                ## MapRolePolicy
+                { id: Identity.uuid(Action), service: services.first, name: 'ListRolePolicy',    description: '',  access_level: 'list' },
+                { id: Identity.uuid(Action), service: services.first, name: 'GetRolePolicy',     description: '',  access_level: 'read' },
+                { id: Identity.uuid(Action), service: services.first, name: 'CreateRolePolicy',  description: '',  access_level: 'write' },
+                { id: Identity.uuid(Action), service: services.first, name: 'DeleteRolePolicy',  description: '',  access_level: 'write' },
+                ## MapUserPolicy
+                { id: Identity.uuid(Action), service: services.first, name: 'ListUserPolicy',    description: '',  access_level: 'list' },
+                { id: Identity.uuid(Action), service: services.first, name: 'GetUserPolicy',     description: '',  access_level: 'read' },
+                { id: Identity.uuid(Action), service: services.first, name: 'CreateUserPolicy',  description: '',  access_level: 'write' },
+                { id: Identity.uuid(Action), service: services.first, name: 'DeleteUserPolicy',  description: '',  access_level: 'write' },
+                ## MapUserRole
+                { id: Identity.uuid(Action), service: services.first, name: 'ListUserRole',    description: '',  access_level: 'list' },
+                { id: Identity.uuid(Action), service: services.first, name: 'GetUserRole',     description: '',  access_level: 'read' },
+                { id: Identity.uuid(Action), service: services.first, name: 'CreateUserRole',  description: '',  access_level: 'write' },
+                { id: Identity.uuid(Action), service: services.first, name: 'DeleteUserRole',  description: '',  access_level: 'write' },
+                ## Policy
+                { id: Identity.uuid(Action), service: services.first, name: 'ListPolicy',    description: '',  access_level: 'list' },
+                { id: Identity.uuid(Action), service: services.first, name: 'GetPolicy',     description: '',  access_level: 'read' },
+                { id: Identity.uuid(Action), service: services.first, name: 'CreatePolicy',  description: '',  access_level: 'write' },
+                { id: Identity.uuid(Action), service: services.first, name: 'UpdatePolicy',  description: '',  access_level: 'write' },
+                { id: Identity.uuid(Action), service: services.first, name: 'DeletePolicy',  description: '',  access_level: 'write' },
+                ## Role
+                { id: Identity.uuid(Action), service: services.first, name: 'ListRole',    description: '',  access_level: 'list' },
+                { id: Identity.uuid(Action), service: services.first, name: 'GetRole',     description: '',  access_level: 'read' },
+                { id: Identity.uuid(Action), service: services.first, name: 'CreateRole',  description: '',  access_level: 'write' },
+                { id: Identity.uuid(Action), service: services.first, name: 'UpdateRole',  description: '',  access_level: 'write' },
+                { id: Identity.uuid(Action), service: services.first, name: 'DeleteRole',  description: '',  access_level: 'write' },
+                ## User
+                { id: Identity.uuid(Action), service: services.first, name: 'ListUser',    description: '',  access_level: 'list' },
+                { id: Identity.uuid(Action), service: services.first, name: 'GetUser',     description: '',  access_level: 'read' },
+                { id: Identity.uuid(Action), service: services.first, name: 'CreateUser',  description: '',  access_level: 'write' },
+                { id: Identity.uuid(Action), service: services.first, name: 'UpdateUser',  description: '',  access_level: 'write' },
+                { id: Identity.uuid(Action), service: services.first, name: 'DeleteUser',  description: '',  access_level: 'write' },
+              ])
 
 #--------------------------------------------------------------------
 # ADVERTISEMENTS
 #--------------------------------------------------------------------
-advertisements = Services::Operation::Create.call(params: { name: 'advertisements', description: '' })
-
-## Agency
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'ListAgency',    description: '',  access_level: 'list' })
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'GetAgency',     description: '',  access_level: 'read' })
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'CreateAgency',  description: '',  access_level: 'write' })
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'UpdateAgency',  description: '',  access_level: 'write' })
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'DeleteAgency',  description: '',  access_level: 'write' })
-
-## Advertiser
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'ListAdvertiser',    description: '',  access_level: 'list' })
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'GetAdvertiser',     description: '',  access_level: 'read' })
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'CreateAdvertiser',  description: '',  access_level: 'write' })
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'UpdateAdvertiser',  description: '',  access_level: 'write' })
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'DeleteAdvertiser',  description: '',  access_level: 'write' })
-
-## Product
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'ListProduct',    description: '',  access_level: 'list' })
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'GetProduct',     description: '',  access_level: 'read' })
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'CreateProduct',  description: '',  access_level: 'write' })
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'UpdateProduct',  description: '',  access_level: 'write' })
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'DeleteProduct',  description: '',  access_level: 'write' })
-
-## Campaign
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'ListCampaign',    description: '',  access_level: 'list' })
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'GetCampaign',     description: '',  access_level: 'read' })
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'CreateCampaign',  description: '',  access_level: 'write' })
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'UpdateCampaign',  description: '',  access_level: 'write' })
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'DeleteCampaign',  description: '',  access_level: 'write' })
-
-## Event
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'ListEvent',    description: '',  access_level: 'list' })
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'GetEvent',     description: '',  access_level: 'read' })
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'CreateEvent',  description: '',  access_level: 'write' })
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'UpdateEvent',  description: '',  access_level: 'write' })
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'DeleteEvent',  description: '',  access_level: 'write' })
-
-## Banner
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'ListBanner',    description: '',  access_level: 'list' })
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'GetBanner',     description: '',  access_level: 'read' })
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'CreateBanner',  description: '',  access_level: 'write' })
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'UpdateBanner',  description: '',  access_level: 'write' })
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'DeleteBanner',  description: '',  access_level: 'write' })
-
-## BannerDetail
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'ListBannerDetail',    description: '',  access_level: 'list' })
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'GetBannerDetail',     description: '',  access_level: 'read' })
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'CreateBannerDetail',  description: '',  access_level: 'write' })
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'UpdateBannerDetail',  description: '',  access_level: 'write' })
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'DeleteBannerDetail',  description: '',  access_level: 'write' })
-
-## Budget
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'ListBudget',    description: '',  access_level: 'list' })
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'GetBudget',     description: '',  access_level: 'read' })
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'CreateBudget',  description: '',  access_level: 'write' })
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'UpdateBudget',  description: '',  access_level: 'write' })
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'DeleteBudget',  description: '',  access_level: 'write' })
-
-## BudgetDetail
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'ListBudgetDetail',    description: '',  access_level: 'list' })
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'GetBudgetDetail',     description: '',  access_level: 'read' })
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'CreateBudgetDetail',  description: '',  access_level: 'write' })
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'UpdateBudgetDetail',  description: '',  access_level: 'write' })
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'DeleteBudgetDetail',  description: '',  access_level: 'write' })
-
-## Achievement
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'ListAchievement',    description: '',  access_level: 'list' })
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'GetAchievement',     description: '',  access_level: 'read' })
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'CreateAchievement',  description: '',  access_level: 'write' })
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'UpdateAchievement',  description: '',  access_level: 'write' })
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'DeleteAchievement',  description: '',  access_level: 'write' })
-
-## AchievementDetail
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'ListAchievementDetail',    description: '',  access_level: 'list' })
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'GetAchievementDetail',     description: '',  access_level: 'read' })
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'CreateAchievementDetail',  description: '',  access_level: 'write' })
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'UpdateAchievementDetail',  description: '',  access_level: 'write' })
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'DeleteAchievementDetail',  description: '',  access_level: 'write' })
-
-## Measurement
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'ListMeasurement',    description: '',  access_level: 'list' })
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'GetMeasurement',     description: '',  access_level: 'read' })
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'CreateMeasurement',  description: '',  access_level: 'write' })
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'UpdateMeasurement',  description: '',  access_level: 'write' })
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'DeleteMeasurement',  description: '',  access_level: 'write' })
-
-## MeasurementDetail
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'ListMeasurementDetail',    description: '',  access_level: 'list' })
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'GetMeasurementDetail',     description: '',  access_level: 'read' })
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'CreateMeasurementDetail',  description: '',  access_level: 'write' })
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'UpdateMeasurementDetail',  description: '',  access_level: 'write' })
-Actions::Operation::Create.call(params: { service_id: advertisements[:model].id, name: 'DeleteMeasurementDetail',  description: '',  access_level: 'write' })
+Action.create([
+                ## Achievement
+                { id: Identity.uuid(Action), service: services.second, name: 'ListAchievement',    description: '',  access_level: 'list' },
+                { id: Identity.uuid(Action), service: services.second, name: 'GetAchievement',     description: '',  access_level: 'read' },
+                { id: Identity.uuid(Action), service: services.second, name: 'CreateAchievement',  description: '',  access_level: 'write' },
+                { id: Identity.uuid(Action), service: services.second, name: 'UpdateAchievement',  description: '',  access_level: 'write' },
+                { id: Identity.uuid(Action), service: services.second, name: 'DeleteAchievement',  description: '',  access_level: 'write' },
+                ## AchievementDetail
+                { id: Identity.uuid(Action), service: services.second, name: 'ListAchievementDetail',    description: '',  access_level: 'list' },
+                { id: Identity.uuid(Action), service: services.second, name: 'GetAchievementDetail',     description: '',  access_level: 'read' },
+                { id: Identity.uuid(Action), service: services.second, name: 'CreateAchievementDetail',  description: '',  access_level: 'write' },
+                { id: Identity.uuid(Action), service: services.second, name: 'UpdateAchievementDetail',  description: '',  access_level: 'write' },
+                { id: Identity.uuid(Action), service: services.second, name: 'DeleteAchievementDetail',  description: '',  access_level: 'write' },
+                ## Advertiser
+                { id: Identity.uuid(Action), service: services.second, name: 'ListAdvertiser',    description: '',  access_level: 'list' },
+                { id: Identity.uuid(Action), service: services.second, name: 'GetAdvertiser',     description: '',  access_level: 'read' },
+                { id: Identity.uuid(Action), service: services.second, name: 'CreateAdvertiser',  description: '',  access_level: 'write' },
+                { id: Identity.uuid(Action), service: services.second, name: 'UpdateAdvertiser',  description: '',  access_level: 'write' },
+                { id: Identity.uuid(Action), service: services.second, name: 'DeleteAdvertiser',  description: '',  access_level: 'write' },
+                ## Agency
+                { id: Identity.uuid(Action), service: services.second, name: 'ListAgency',    description: '',  access_level: 'list' },
+                { id: Identity.uuid(Action), service: services.second, name: 'GetAgency',     description: '',  access_level: 'read' },
+                { id: Identity.uuid(Action), service: services.second, name: 'CreateAgency',  description: '',  access_level: 'write' },
+                { id: Identity.uuid(Action), service: services.second, name: 'UpdateAgency',  description: '',  access_level: 'write' },
+                { id: Identity.uuid(Action), service: services.second, name: 'DeleteAgency',  description: '',  access_level: 'write' },
+                ## Banner
+                { id: Identity.uuid(Action), service: services.second, name: 'ListBanner',    description: '',  access_level: 'list' },
+                { id: Identity.uuid(Action), service: services.second, name: 'GetBanner',     description: '',  access_level: 'read' },
+                { id: Identity.uuid(Action), service: services.second, name: 'CreateBanner',  description: '',  access_level: 'write' },
+                { id: Identity.uuid(Action), service: services.second, name: 'UpdateBanner',  description: '',  access_level: 'write' },
+                { id: Identity.uuid(Action), service: services.second, name: 'DeleteBanner',  description: '',  access_level: 'write' },
+                ## BannerDetail
+                { id: Identity.uuid(Action), service: services.second, name: 'ListBannerDetail',    description: '',  access_level: 'list' },
+                { id: Identity.uuid(Action), service: services.second, name: 'GetBannerDetail',     description: '',  access_level: 'read' },
+                { id: Identity.uuid(Action), service: services.second, name: 'CreateBannerDetail',  description: '',  access_level: 'write' },
+                { id: Identity.uuid(Action), service: services.second, name: 'UpdateBannerDetail',  description: '',  access_level: 'write' },
+                { id: Identity.uuid(Action), service: services.second, name: 'DeleteBannerDetail',  description: '',  access_level: 'write' },
+                ## Budget
+                { id: Identity.uuid(Action), service: services.second, name: 'ListBudget',    description: '',  access_level: 'list' },
+                { id: Identity.uuid(Action), service: services.second, name: 'GetBudget',     description: '',  access_level: 'read' },
+                { id: Identity.uuid(Action), service: services.second, name: 'CreateBudget',  description: '',  access_level: 'write' },
+                { id: Identity.uuid(Action), service: services.second, name: 'UpdateBudget',  description: '',  access_level: 'write' },
+                { id: Identity.uuid(Action), service: services.second, name: 'DeleteBudget',  description: '',  access_level: 'write' },
+                ## BudgetDetail
+                { id: Identity.uuid(Action), service: services.second, name: 'ListBudgetDetail',    description: '',  access_level: 'list' },
+                { id: Identity.uuid(Action), service: services.second, name: 'GetBudgetDetail',     description: '',  access_level: 'read' },
+                { id: Identity.uuid(Action), service: services.second, name: 'CreateBudgetDetail',  description: '',  access_level: 'write' },
+                { id: Identity.uuid(Action), service: services.second, name: 'UpdateBudgetDetail',  description: '',  access_level: 'write' },
+                { id: Identity.uuid(Action), service: services.second, name: 'DeleteBudgetDetail',  description: '',  access_level: 'write' },
+                ## Campaign
+                { id: Identity.uuid(Action), service: services.second, name: 'ListCampaign',    description: '',  access_level: 'list' },
+                { id: Identity.uuid(Action), service: services.second, name: 'GetCampaign',     description: '',  access_level: 'read' },
+                { id: Identity.uuid(Action), service: services.second, name: 'CreateCampaign',  description: '',  access_level: 'write' },
+                { id: Identity.uuid(Action), service: services.second, name: 'UpdateCampaign',  description: '',  access_level: 'write' },
+                { id: Identity.uuid(Action), service: services.second, name: 'DeleteCampaign',  description: '',  access_level: 'write' },
+                ## Event
+                { id: Identity.uuid(Action), service: services.second, name: 'ListEvent',    description: '',  access_level: 'list' },
+                { id: Identity.uuid(Action), service: services.second, name: 'GetEvent',     description: '',  access_level: 'read' },
+                { id: Identity.uuid(Action), service: services.second, name: 'CreateEvent',  description: '',  access_level: 'write' },
+                { id: Identity.uuid(Action), service: services.second, name: 'UpdateEvent',  description: '',  access_level: 'write' },
+                { id: Identity.uuid(Action), service: services.second, name: 'DeleteEvent',  description: '',  access_level: 'write' },
+                ## Measurement
+                { id: Identity.uuid(Action), service: services.second, name: 'ListMeasurement',    description: '',  access_level: 'list' },
+                { id: Identity.uuid(Action), service: services.second, name: 'GetMeasurement',     description: '',  access_level: 'read' },
+                { id: Identity.uuid(Action), service: services.second, name: 'CreateMeasurement',  description: '',  access_level: 'write' },
+                { id: Identity.uuid(Action), service: services.second, name: 'UpdateMeasurement',  description: '',  access_level: 'write' },
+                { id: Identity.uuid(Action), service: services.second, name: 'DeleteMeasurement',  description: '',  access_level: 'write' },
+                ## MeasurementDetail
+                { id: Identity.uuid(Action), service: services.second, name: 'ListMeasurementDetail',    description: '',  access_level: 'list' },
+                { id: Identity.uuid(Action), service: services.second, name: 'GetMeasurementDetail',     description: '',  access_level: 'read' },
+                { id: Identity.uuid(Action), service: services.second, name: 'CreateMeasurementDetail',  description: '',  access_level: 'write' },
+                { id: Identity.uuid(Action), service: services.second, name: 'UpdateMeasurementDetail',  description: '',  access_level: 'write' },
+                { id: Identity.uuid(Action), service: services.second, name: 'DeleteMeasurementDetail',  description: '',  access_level: 'write' },
+                ## Product
+                { id: Identity.uuid(Action), service: services.second, name: 'ListProduct',    description: '',  access_level: 'list' },
+                { id: Identity.uuid(Action), service: services.second, name: 'GetProduct',     description: '',  access_level: 'read' },
+                { id: Identity.uuid(Action), service: services.second, name: 'CreateProduct',  description: '',  access_level: 'write' },
+                { id: Identity.uuid(Action), service: services.second, name: 'UpdateProduct',  description: '',  access_level: 'write' },
+                { id: Identity.uuid(Action), service: services.second, name: 'DeleteProduct',  description: '',  access_level: 'write' },
+              ])
