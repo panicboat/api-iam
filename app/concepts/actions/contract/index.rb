@@ -1,6 +1,7 @@
 module Actions::Contract
   class Index < Abstract::Contract
     property  :service_id
+    property  :name
 
     validates :service_id, presence: true, format: { with: FORMAT_UUID }
   end

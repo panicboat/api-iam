@@ -1,8 +1,8 @@
 class CreateMapRolePolicies < ActiveRecord::Migration[6.0]
   def change
     create_table :map_role_policies, comment: 'ロールポリシー' do |t|
-      t.string  :role_id,   null: false,  comment: 'ロールID'
-      t.string  :policy_id, null: false,  comment: 'ポリシーID'
+      t.string  :role_id,   null: false,  comment: 'ロールID', limit: 36
+      t.string  :policy_id, null: false,  comment: 'ポリシーID', limit: 36
 
       t.timestamps
     end

@@ -6,6 +6,30 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+users = User.create([
+                      { id: Identity.uuid(User), email: 'admin@panicboat.net', name: 'panicboat' },
+                    ])
+
+policies = Policy.create([
+                           { id: Identity.uuid(Policy), name: 'AdministratorAccess', owner: 'pnb' },
+                         ])
+
+statements = Statement.create([
+                                { id: Identity.uuid(Statement), policy: policies.first, effect: 'allow' },
+                              ])
+
+Resource.create([
+                  { statement: statements.first, name: '*' },
+                ])
+
+MapStatementAction.create([
+                            { statement: statements.first, action: '*' },
+                          ])
+
+MapUserPolicy.create([
+                       { user: users.first, policy: policies.first },
+                     ])
+
 services = Service.create([
                             { id: Identity.uuid(Service), name: 'iam', description: '' },
                             { id: Identity.uuid(Service), name: 'advertisements', description: '' },
@@ -15,6 +39,12 @@ services = Service.create([
 # IAM
 #--------------------------------------------------------------------
 Action.create([
+                ## Action
+                { id: Identity.uuid(Action), service: services.first, name: 'ListAction',    description: '',  access_level: 'list' },
+                { id: Identity.uuid(Action), service: services.first, name: 'GetAction',     description: '',  access_level: 'read' },
+                { id: Identity.uuid(Action), service: services.first, name: 'CreateAction',  description: '',  access_level: 'write' },
+                { id: Identity.uuid(Action), service: services.first, name: 'UpdateAction',  description: '',  access_level: 'write' },
+                { id: Identity.uuid(Action), service: services.first, name: 'DeleteAction',  description: '',  access_level: 'write' },
                 ## Group
                 { id: Identity.uuid(Action), service: services.first, name: 'ListGroup',   description: '',  access_level: 'list' },
                 { id: Identity.uuid(Action), service: services.first, name: 'GetGroup',    description: '',  access_level: 'read' },
@@ -63,6 +93,12 @@ Action.create([
                 { id: Identity.uuid(Action), service: services.first, name: 'CreateRole',  description: '',  access_level: 'write' },
                 { id: Identity.uuid(Action), service: services.first, name: 'UpdateRole',  description: '',  access_level: 'write' },
                 { id: Identity.uuid(Action), service: services.first, name: 'DeleteRole',  description: '',  access_level: 'write' },
+                ## Service
+                { id: Identity.uuid(Action), service: services.first, name: 'ListService',    description: '',  access_level: 'list' },
+                { id: Identity.uuid(Action), service: services.first, name: 'GetService',     description: '',  access_level: 'read' },
+                { id: Identity.uuid(Action), service: services.first, name: 'CreateService',  description: '',  access_level: 'write' },
+                { id: Identity.uuid(Action), service: services.first, name: 'UpdateService',  description: '',  access_level: 'write' },
+                { id: Identity.uuid(Action), service: services.first, name: 'DeleteService',  description: '',  access_level: 'write' },
                 ## User
                 { id: Identity.uuid(Action), service: services.first, name: 'ListUser',    description: '',  access_level: 'list' },
                 { id: Identity.uuid(Action), service: services.first, name: 'GetUser',     description: '',  access_level: 'read' },

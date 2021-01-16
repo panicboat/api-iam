@@ -1,8 +1,8 @@
 class CreateMapUserRoles < ActiveRecord::Migration[6.0]
   def change
     create_table :map_user_roles, comment: '管理者ロール' do |t|
-      t.string  :user_id,   null: false,  comment: '管理者ID'
-      t.string  :role_id,   null: false,  comment: 'ロールID'
+      t.string  :user_id,   null: false,  comment: '管理者ID', limit: 36
+      t.string  :role_id,   null: false,  comment: 'ロールID', limit: 36
 
       t.timestamps
     end

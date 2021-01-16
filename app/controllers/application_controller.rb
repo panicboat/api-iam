@@ -10,12 +10,15 @@ class ApplicationController < Panicboat::ApplicationController
 
   def _action(controller, action)
     name =  case action
-              when 'destroy' then "Delete#{controller.capitalize}"
-              when 'index' then "List#{controller.capitalize}"
-              when 'show' then "Get#{controller.capitalize}"
-              else "#{action.capitalize}#{controller.capitalize}"
-              end
-    Action.joins(:service).where(actions: { name: name }).where(services: { name: ENV['AWS_ECS_SERVICE_NAME'] })
+            when 'destroy' then "Delete#{controller.capitalize}"
+            when 'index' then "List#{controller.capitalize}"
+            when 'show' then "Get#{controller.capitalize}"
+            else "#{action.capitalize}#{controller.capitalize}"
+            end
+    model = ::Action.find_by(service_id: ENV['PNB_SERVICE_ID'], name: name)
+    return nil if model.blank?
+
+    model.id
   end
 
   def _session(headers)

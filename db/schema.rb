@@ -31,8 +31,8 @@ ActiveRecord::Schema.define(version: 2020_08_22_020000) do
   end
 
   create_table "map_group_policies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", comment: "グループポリシー", force: :cascade do |t|
-    t.string "group_id", null: false, comment: "グループID"
-    t.string "policy_id", null: false, comment: "ポリシーID"
+    t.string "group_id", limit: 36, null: false, comment: "グループID"
+    t.string "policy_id", limit: 36, null: false, comment: "ポリシーID"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["group_id", "policy_id"], name: "index_map_group_policies_on_group_id_and_policy_id", unique: true
@@ -40,8 +40,8 @@ ActiveRecord::Schema.define(version: 2020_08_22_020000) do
   end
 
   create_table "map_group_roles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", comment: "グループロール", force: :cascade do |t|
-    t.string "group_id", null: false, comment: "グループID"
-    t.string "role_id", null: false, comment: "ロールID"
+    t.string "group_id", limit: 36, null: false, comment: "グループID"
+    t.string "role_id", limit: 36, null: false, comment: "ロールID"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["group_id", "role_id"], name: "index_map_group_roles_on_group_id_and_role_id", unique: true
@@ -49,8 +49,8 @@ ActiveRecord::Schema.define(version: 2020_08_22_020000) do
   end
 
   create_table "map_group_users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", comment: "グループ管理者", force: :cascade do |t|
-    t.string "group_id", null: false, comment: "グループID"
-    t.string "user_id", null: false, comment: "管理者ID"
+    t.string "group_id", limit: 36, null: false, comment: "グループID"
+    t.string "user_id", limit: 36, null: false, comment: "管理者ID"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["group_id", "user_id"], name: "index_map_group_users_on_group_id_and_user_id", unique: true
@@ -58,8 +58,8 @@ ActiveRecord::Schema.define(version: 2020_08_22_020000) do
   end
 
   create_table "map_role_policies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", comment: "ロールポリシー", force: :cascade do |t|
-    t.string "role_id", null: false, comment: "ロールID"
-    t.string "policy_id", null: false, comment: "ポリシーID"
+    t.string "role_id", limit: 36, null: false, comment: "ロールID"
+    t.string "policy_id", limit: 36, null: false, comment: "ポリシーID"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["policy_id"], name: "fk_rails_369370d5df"
@@ -75,8 +75,8 @@ ActiveRecord::Schema.define(version: 2020_08_22_020000) do
   end
 
   create_table "map_user_policies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", comment: "管理者ポリシー", force: :cascade do |t|
-    t.string "user_id", null: false, comment: "管理者ID"
-    t.string "policy_id", null: false, comment: "ポリシーID"
+    t.string "user_id", limit: 36, null: false, comment: "管理者ID"
+    t.string "policy_id", limit: 36, null: false, comment: "ポリシーID"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["policy_id"], name: "fk_rails_bca27aa193"
@@ -84,8 +84,8 @@ ActiveRecord::Schema.define(version: 2020_08_22_020000) do
   end
 
   create_table "map_user_roles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", comment: "管理者ロール", force: :cascade do |t|
-    t.string "user_id", null: false, comment: "管理者ID"
-    t.string "role_id", null: false, comment: "ロールID"
+    t.string "user_id", limit: 36, null: false, comment: "管理者ID"
+    t.string "role_id", limit: 36, null: false, comment: "ロールID"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["role_id"], name: "fk_rails_04aebf5b81"
@@ -127,7 +127,7 @@ ActiveRecord::Schema.define(version: 2020_08_22_020000) do
   end
 
   create_table "statements", id: :string, limit: 36, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", comment: "ステートメント", force: :cascade do |t|
-    t.string "policy_id", null: false, comment: "ポリシーID"
+    t.string "policy_id", limit: 36, null: false, comment: "ポリシーID"
     t.integer "effect", limit: 3, null: false, comment: "効果"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
