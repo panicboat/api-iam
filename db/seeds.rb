@@ -33,6 +33,7 @@ MapUserPolicy.create([
 services = Service.create([
                             { id: Identity.uuid(Service), name: 'iam', description: '' },
                             { id: Identity.uuid(Service), name: 'advertisements', description: '' },
+                            { id: Identity.uuid(Service), name: 'members', description: '' },
                           ])
 
 #--------------------------------------------------------------------
@@ -189,4 +190,16 @@ Action.create([
                 { id: Identity.uuid(Action), service: services.second, name: 'CreateProduct',  description: '',  access_level: 'write' },
                 { id: Identity.uuid(Action), service: services.second, name: 'UpdateProduct',  description: '',  access_level: 'write' },
                 { id: Identity.uuid(Action), service: services.second, name: 'DeleteProduct',  description: '',  access_level: 'write' },
+              ])
+
+#--------------------------------------------------------------------
+# MEMBERS
+#--------------------------------------------------------------------
+Action.create([
+                ## Member
+                { id: Identity.uuid(Action), service: services.third, name: 'ListMember',    description: '',  access_level: 'list' },
+                { id: Identity.uuid(Action), service: services.third, name: 'GetMember',     description: '',  access_level: 'read' },
+                { id: Identity.uuid(Action), service: services.third, name: 'CreateMember',  description: '',  access_level: 'write' },
+                { id: Identity.uuid(Action), service: services.third, name: 'UpdateMember',  description: '',  access_level: 'write' },
+                { id: Identity.uuid(Action), service: services.third, name: 'DeleteMember',  description: '',  access_level: 'write' },
               ])
