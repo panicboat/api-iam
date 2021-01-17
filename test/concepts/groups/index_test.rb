@@ -22,14 +22,14 @@ module Groups
     end
 
     test 'Index Data' do
-      ctx = Operation::Index.call(params: {}, current_user: @current_user)
+      ctx = Operation::Index.call(params: {}, current_user: @current_user, action: 'DUMMY_ACTION_ID')
       assert ctx[:model].Groups.present?
       assert_equal ::Group.all.count, ctx[:model].Groups.length
     end
 
     test 'Index No Data' do
       ::Group.all.each(&:destroy)
-      assert_equal [], Operation::Index.call(params: {}, current_user: @current_user)[:model].Groups
+      assert_equal [], Operation::Index.call(params: {}, current_user: @current_user, action: 'DUMMY_ACTION_ID')[:model].Groups
     end
   end
 end

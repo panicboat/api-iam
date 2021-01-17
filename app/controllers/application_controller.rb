@@ -2,10 +2,16 @@ class ApplicationController < Panicboat::ApplicationController
   private
 
   def _run_options(ctx)
+    ctx.merge!(_options)
+  end
+
+  def _options
     headers = ::RequestHeader.new(request.headers)
-    ctx.merge!({ headers: headers })
-    ctx.merge!({ action: _action(request.controller_class.to_s.gsub(/Controller$/, '').singularize, request.path_parameters[:action]) })
-    ctx.merge!({ current_user: _session(headers) })
+    {
+      headers: headers,
+      action: _action(request.controller_class.to_s.gsub(/Controller$/, '').singularize, request.path_parameters[:action]),
+      current_user: _session(headers),
+    }
   end
 
   def _action(controller, action)

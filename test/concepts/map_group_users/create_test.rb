@@ -29,16 +29,16 @@ module MapGroupUsers
     end
 
     test 'Create Data' do
-      ctx = Operation::Create.call(params: default_params, current_user: @current_user)
+      ctx = Operation::Create.call(params: default_params, current_user: @current_user, action: 'DUMMY_ACTION_ID')
       assert ctx.success?
       assert_equal groups(:spec).id, ctx[:model].group_id
       assert_equal users(:spec).id, ctx[:model].user_id
     end
 
     test 'Create Duplicate User' do
-      Operation::Create.call(params: default_params, current_user: @current_user)
+      Operation::Create.call(params: default_params, current_user: @current_user, action: 'DUMMY_ACTION_ID')
       e = assert_raises InvalidParameters do
-        Operation::Create.call(params: default_params, current_user: @current_user)
+        Operation::Create.call(params: default_params, current_user: @current_user, action: 'DUMMY_ACTION_ID')
       end
       assert_equal ['User has already been taken'], JSON.parse(e.message)
     end

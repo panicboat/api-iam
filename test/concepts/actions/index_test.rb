@@ -22,7 +22,7 @@ module Actions
     end
 
     test 'Index Data' do
-      ctx = Operation::Index.call(params: { service_id: actions(:list).service_id }, current_user: @current_user)
+      ctx = Operation::Index.call(params: { service_id: actions(:list).service_id }, current_user: @current_user, action: 'DUMMY_ACTION_ID')
       assert ctx[:model].Actions.present?
       assert_equal ::Action.all.count, ctx[:model].Actions.length
     end
@@ -30,7 +30,7 @@ module Actions
     test 'Index No Data' do
       service_id = actions(:list).service_id
       ::Action.all.each(&:destroy)
-      assert_equal [], Operation::Index.call(params: { service_id: service_id }, current_user: @current_user)[:model].Actions
+      assert_equal [], Operation::Index.call(params: { service_id: service_id }, current_user: @current_user, action: 'DUMMY_ACTION_ID')[:model].Actions
     end
   end
 end

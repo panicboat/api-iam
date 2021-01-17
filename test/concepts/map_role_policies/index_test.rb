@@ -22,7 +22,7 @@ module MapRolePolicies
     end
 
     test 'Index Data' do
-      ctx = Operation::Index.call(params: { role_id: map_role_policies(:spec).role_id }, current_user: @current_user)
+      ctx = Operation::Index.call(params: { role_id: map_role_policies(:spec).role_id }, current_user: @current_user, action: 'DUMMY_ACTION_ID')
       assert ctx[:model].MapRolePolicies.present?
       assert_equal ::MapRolePolicy.all.count, ctx[:model].MapRolePolicies.length
     end
@@ -30,7 +30,7 @@ module MapRolePolicies
     test 'Index No Data' do
       role_id = map_role_policies(:spec).role_id
       ::MapRolePolicy.all.each(&:destroy)
-      assert_equal [], Operation::Index.call(params: { role_id: role_id }, current_user: @current_user)[:model].MapRolePolicies
+      assert_equal [], Operation::Index.call(params: { role_id: role_id }, current_user: @current_user, action: 'DUMMY_ACTION_ID')[:model].MapRolePolicies
     end
   end
 end

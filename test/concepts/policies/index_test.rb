@@ -22,14 +22,14 @@ module Policies
     end
 
     test 'Index Data' do
-      ctx = Operation::Index.call(params: {}, current_user: @current_user)
+      ctx = Operation::Index.call(params: {}, current_user: @current_user, action: 'DUMMY_ACTION_ID')
       assert ctx[:model].Policies.present?
       assert_equal ::Policy.all.count, ctx[:model].Policies.length
     end
 
     test 'Index No Data' do
       ::Policy.all.each(&:destroy)
-      assert_equal [], Operation::Index.call(params: {}, current_user: @current_user)[:model].Policies
+      assert_equal [], Operation::Index.call(params: {}, current_user: @current_user, action: 'DUMMY_ACTION_ID')[:model].Policies
     end
   end
 end

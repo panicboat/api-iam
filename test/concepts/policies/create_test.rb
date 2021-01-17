@@ -29,14 +29,14 @@ module Policies
     end
 
     test 'Create Data' do
-      ctx = Operation::Create.call(params: default_params, current_user: @current_user)
+      ctx = Operation::Create.call(params: default_params, current_user: @current_user, action: 'DUMMY_ACTION_ID')
       assert ctx.success?
       assert_equal 'PolicySpec', ctx[:model].name
     end
 
     test 'Create Policy Statements' do
       params = default_params.merge({ statements: [{ effect: 'allow', actions: ['iam:List*'], resources: ['prn:panicboat:platform:iam:service/bc2edb53-551c-4bab-af24-ec1b63b89a3b'] }] })
-      result = Operation::Create.call(params: params, current_user: @current_user)
+      result = Operation::Create.call(params: params, current_user: @current_user, action: 'DUMMY_ACTION_ID')
       result[:model].statements do |statement|
         assert_equal statement.effect 'allow'
         assert_equal statement.actions ['iam:List*']

@@ -29,14 +29,14 @@ module MapUserRoles
     end
 
     test 'Destory Data' do
-      ctx = Operation::Destroy.call(params: { user_id: map_user_roles(:spec).user_id, role_id: map_user_roles(:spec).role_id }, current_user: @current_user)
+      ctx = Operation::Destroy.call(params: { user_id: map_user_roles(:spec).user_id, role_id: map_user_roles(:spec).role_id }, current_user: @current_user, action: 'DUMMY_ACTION_ID')
       assert ctx.success?
       assert_equal [], ::MapUserRole.where({ user_id: map_user_roles(:spec).user_id })
     end
 
     test 'Destroy No Data' do
       e = assert_raises InvalidParameters do
-        Operation::Destroy.call(params: { user_id: -1, role_id: -1 }, current_user: @current_user)
+        Operation::Destroy.call(params: { user_id: -1, role_id: -1 }, current_user: @current_user, action: 'DUMMY_ACTION_ID')
       end
       assert_equal ['User is invalid', 'Role is invalid'], JSON.parse(e.message)
     end

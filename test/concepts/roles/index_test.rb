@@ -22,14 +22,14 @@ module Roles
     end
 
     test 'Index Data' do
-      ctx = Operation::Index.call(params: {}, current_user: @current_user)
+      ctx = Operation::Index.call(params: {}, current_user: @current_user, action: 'DUMMY_ACTION_ID')
       assert ctx[:model].Roles.present?
       assert_equal ::Role.all.count, ctx[:model].Roles.length
     end
 
     test 'Index No Data' do
       ::Role.all.each(&:destroy)
-      assert_equal [], Operation::Index.call(params: {}, current_user: @current_user)[:model].Roles
+      assert_equal [], Operation::Index.call(params: {}, current_user: @current_user, action: 'DUMMY_ACTION_ID')[:model].Roles
     end
   end
 end

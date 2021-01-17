@@ -22,7 +22,7 @@ module MapGroupPolicies
     end
 
     test 'Index Data' do
-      ctx = Operation::Index.call(params: { group_id: map_group_policies(:spec).group_id }, current_user: @current_user)
+      ctx = Operation::Index.call(params: { group_id: map_group_policies(:spec).group_id }, current_user: @current_user, action: 'DUMMY_ACTION_ID')
       assert ctx[:model].MapGroupPolicies.present?
       assert_equal ::MapGroupPolicy.all.count, ctx[:model].MapGroupPolicies.length
     end
@@ -30,7 +30,7 @@ module MapGroupPolicies
     test 'Index No Data' do
       group_id = map_group_policies(:spec).group_id
       ::MapGroupPolicy.all.each(&:destroy)
-      assert_equal [], Operation::Index.call(params: { group_id: group_id }, current_user: @current_user)[:model].MapGroupPolicies
+      assert_equal [], Operation::Index.call(params: { group_id: group_id }, current_user: @current_user, action: 'DUMMY_ACTION_ID')[:model].MapGroupPolicies
     end
   end
 end

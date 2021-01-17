@@ -29,14 +29,14 @@ module MapRolePolicies
     end
 
     test 'Destory Data' do
-      ctx = Operation::Destroy.call(params: { role_id: map_role_policies(:spec).role_id, policy_id: map_role_policies(:spec).policy_id }, current_user: @current_user)
+      ctx = Operation::Destroy.call(params: { role_id: map_role_policies(:spec).role_id, policy_id: map_role_policies(:spec).policy_id }, current_user: @current_user, action: 'DUMMY_ACTION_ID')
       assert ctx.success?
       assert_equal [], ::MapRolePolicy.where({ role_id: map_role_policies(:spec).role_id })
     end
 
     test 'Destroy No Data' do
       e = assert_raises InvalidParameters do
-        Operation::Destroy.call(params: { role_id: -1, policy_id: -1 }, current_user: @current_user)
+        Operation::Destroy.call(params: { role_id: -1, policy_id: -1 }, current_user: @current_user, action: 'DUMMY_ACTION_ID')
       end
       assert_equal ['Role is invalid', 'Policy is invalid'], JSON.parse(e.message)
     end

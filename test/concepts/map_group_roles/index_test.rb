@@ -22,7 +22,7 @@ module MapGroupRoles
     end
 
     test 'Index Data' do
-      ctx = Operation::Index.call(params: { group_id: map_group_roles(:spec).group_id }, current_user: @current_user)
+      ctx = Operation::Index.call(params: { group_id: map_group_roles(:spec).group_id }, current_user: @current_user, action: 'DUMMY_ACTION_ID')
       assert ctx[:model].MapGroupRoles.present?
       assert_equal ::MapGroupRole.all.count, ctx[:model].MapGroupRoles.length
     end
@@ -30,7 +30,7 @@ module MapGroupRoles
     test 'Index No Data' do
       group_id = map_group_roles(:spec).group_id
       ::MapGroupRole.all.each(&:destroy)
-      assert_equal [], Operation::Index.call(params: { group_id: group_id }, current_user: @current_user)[:model].MapGroupRoles
+      assert_equal [], Operation::Index.call(params: { group_id: group_id }, current_user: @current_user, action: 'DUMMY_ACTION_ID')[:model].MapGroupRoles
     end
   end
 end

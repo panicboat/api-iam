@@ -15,6 +15,8 @@ module Tokens::Operation
     end
 
     def claim(ctx)
+      return nil if ctx[:headers].blank?
+
       jwt = ctx[:headers].authorization[RequestHeader::USER_CLAIMS]
       return nil if jwt.blank?
 
@@ -22,6 +24,8 @@ module Tokens::Operation
     end
 
     def token(ctx)
+      return nil if ctx[:headers].blank?
+
       jwt = ctx[:headers].authorization[RequestHeader::ACCESS_TOKEN]
       return nil if jwt.blank?
 

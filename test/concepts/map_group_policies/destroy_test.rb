@@ -29,14 +29,14 @@ module MapGroupPolicies
     end
 
     test 'Destory Data' do
-      ctx = Operation::Destroy.call(params: { group_id: map_group_policies(:spec).group_id, policy_id: map_group_policies(:spec).policy_id }, current_user: @current_user)
+      ctx = Operation::Destroy.call(params: { group_id: map_group_policies(:spec).group_id, policy_id: map_group_policies(:spec).policy_id }, current_user: @current_user, action: 'DUMMY_ACTION_ID')
       assert ctx.success?
       assert_equal [], ::MapGroupPolicy.where({ group_id: map_group_policies(:spec).group_id })
     end
 
     test 'Destroy No Data' do
       e = assert_raises InvalidParameters do
-        Operation::Destroy.call(params: { group_id: -1, policy_id: -1 }, current_user: @current_user)
+        Operation::Destroy.call(params: { group_id: -1, policy_id: -1 }, current_user: @current_user, action: 'DUMMY_ACTION_ID')
       end
       assert_equal ['Group is invalid', 'Policy is invalid'], JSON.parse(e.message)
     end

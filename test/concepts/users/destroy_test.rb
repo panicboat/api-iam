@@ -29,14 +29,14 @@ module Users
     end
 
     test 'Destory Data' do
-      ctx = Operation::Destroy.call(params: { id: users(:spec).id }, current_user: @current_user)
+      ctx = Operation::Destroy.call(params: { id: users(:spec).id }, current_user: @current_user, action: 'DUMMY_ACTION_ID')
       assert ctx.success?
       assert_equal [], ::User.where({ id: users(:spec).id })
     end
 
     test 'Destroy No Data' do
       e = assert_raises InvalidParameters do
-        Operation::Destroy.call(params: { id: -1 }, current_user: @current_user)
+        Operation::Destroy.call(params: { id: -1 }, current_user: @current_user, action: 'DUMMY_ACTION_ID')
       end
       assert_equal ['Parameters is invalid'], JSON.parse(e.message)
     end

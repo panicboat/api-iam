@@ -22,7 +22,7 @@ module MapUserPolicies
     end
 
     test 'Index Data' do
-      ctx = Operation::Index.call(params: { user_id: map_user_policies(:spec).user_id }, current_user: @current_user)
+      ctx = Operation::Index.call(params: { user_id: map_user_policies(:spec).user_id }, current_user: @current_user, action: 'DUMMY_ACTION_ID')
       assert ctx[:model].MapUserPolicies.present?
       assert_equal ::MapUserPolicy.all.count, ctx[:model].MapUserPolicies.length
     end
@@ -30,7 +30,7 @@ module MapUserPolicies
     test 'Index No Data' do
       user_id = map_user_policies(:spec).user_id
       ::MapUserPolicy.all.each(&:destroy)
-      assert_equal [], Operation::Index.call(params: { user_id: user_id }, current_user: @current_user)[:model].MapUserPolicies
+      assert_equal [], Operation::Index.call(params: { user_id: user_id }, current_user: @current_user, action: 'DUMMY_ACTION_ID')[:model].MapUserPolicies
     end
   end
 end
