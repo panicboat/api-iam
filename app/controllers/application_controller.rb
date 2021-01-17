@@ -15,10 +15,10 @@ class ApplicationController < Panicboat::ApplicationController
             when 'show' then "Get#{controller.capitalize}"
             else "#{action.capitalize}#{controller.capitalize}"
             end
-    model = ::Action.find_by(service_id: ENV['PNB_SERVICE_ID'], name: name)
-    return nil if model.blank?
+    actions = ::Action.joins(:service).where(services: { name: ENV['AWS_ECS_SERVICE_NAME'] }, actions: { name: name })
+    return nil if actions.blank?
 
-    model.id
+    actions[0].id
   end
 
   def _session(headers)
