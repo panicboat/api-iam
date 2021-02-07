@@ -8,7 +8,7 @@ class TokensControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'Index' do
-    ::ApplicationController.stub_any_instance(:_options, @options) do
+    ::Panicboat::AbstractController.stub_any_instance(:_options, @options) do
       get '/tokens'
     end
     assert_response :success

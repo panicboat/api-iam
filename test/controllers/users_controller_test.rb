@@ -13,35 +13,35 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'Index' do
-    ::ApplicationController.stub_any_instance(:_options, @options) do
+    ::Panicboat::AbstractController.stub_any_instance(:_options, @options) do
       get '/users'
     end
     assert_response :success
   end
 
   test 'Show' do
-    ::ApplicationController.stub_any_instance(:_options, @options) do
+    ::Panicboat::AbstractController.stub_any_instance(:_options, @options) do
       get "/users/#{users(:spec).id}"
     end
     assert_response :success
   end
 
   test 'Create' do
-    ::ApplicationController.stub_any_instance(:_options, @options) do
+    ::Panicboat::AbstractController.stub_any_instance(:_options, @options) do
       post '/users', params: { email: 'spec1@panicboat.net', name: 'Spec1' }
     end
     assert_response :success
   end
 
   test 'Update' do
-    ::ApplicationController.stub_any_instance(:_options, @options) do
+    ::Panicboat::AbstractController.stub_any_instance(:_options, @options) do
       patch "/users/#{users(:spec).id}", params: { name: 'Spec9999' }
     end
     assert_response :success
   end
 
   test 'Destroy' do
-    ::ApplicationController.stub_any_instance(:_options, @options) do
+    ::Panicboat::AbstractController.stub_any_instance(:_options, @options) do
       delete "/users/#{users(:spec).id}"
     end
     assert_response :success

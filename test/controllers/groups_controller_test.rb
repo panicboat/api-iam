@@ -13,35 +13,35 @@ class GroupsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'Index' do
-    ::ApplicationController.stub_any_instance(:_options, @options) do
+    ::Panicboat::AbstractController.stub_any_instance(:_options, @options) do
       get '/groups'
     end
     assert_response :success
   end
 
   test 'Show' do
-    ::ApplicationController.stub_any_instance(:_options, @options) do
+    ::Panicboat::AbstractController.stub_any_instance(:_options, @options) do
       get "/groups/#{groups(:spec).id}"
     end
     assert_response :success
   end
 
   test 'Create' do
-    ::ApplicationController.stub_any_instance(:_options, @options) do
+    ::Panicboat::AbstractController.stub_any_instance(:_options, @options) do
       post '/groups', params: { name: 'spec', description: 'desc' }
     end
     assert_response :success
   end
 
   test 'Update' do
-    ::ApplicationController.stub_any_instance(:_options, @options) do
+    ::Panicboat::AbstractController.stub_any_instance(:_options, @options) do
       patch "/groups/#{groups(:spec).id}", params: { name: 'spec' }
     end
     assert_response :success
   end
 
   test 'Destroy' do
-    ::ApplicationController.stub_any_instance(:_options, @options) do
+    ::Panicboat::AbstractController.stub_any_instance(:_options, @options) do
       delete "/groups/#{groups(:spec).id}"
     end
     assert_response :success

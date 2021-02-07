@@ -13,21 +13,21 @@ class MapRolePoliciesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'Index' do
-    ::ApplicationController.stub_any_instance(:_options, @options) do
+    ::Panicboat::AbstractController.stub_any_instance(:_options, @options) do
       get "/roles/#{roles(:spec).id}/policies"
     end
     assert_response :success
   end
 
   test 'Create' do
-    ::ApplicationController.stub_any_instance(:_options, @options) do
+    ::Panicboat::AbstractController.stub_any_instance(:_options, @options) do
       post "/roles/#{roles(:spec).id}/policies", params: { policy_id: policies(:spec).id }
     end
     assert_response :success
   end
 
   test 'Destroy' do
-    ::ApplicationController.stub_any_instance(:_options, @options) do
+    ::Panicboat::AbstractController.stub_any_instance(:_options, @options) do
       delete "/roles/#{map_role_policies(:spec).role_id}/policies/#{map_role_policies(:spec).policy_id}"
     end
     assert_response :success

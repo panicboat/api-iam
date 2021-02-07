@@ -8,14 +8,14 @@ class PermissionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'Index' do
-    ::ApplicationController.stub_any_instance(:_options, @options) do
+    ::Panicboat::AbstractController.stub_any_instance(:_options, @options) do
       get '/permissions'
     end
     assert_response :success
   end
 
   test 'Show' do
-    ::ApplicationController.stub_any_instance(:_options, @options) do
+    ::Panicboat::AbstractController.stub_any_instance(:_options, @options) do
       get "/permissions/#{actions(:read).id}"
     end
     assert_response :success

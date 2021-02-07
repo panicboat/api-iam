@@ -13,21 +13,21 @@ class MapGroupRolesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'Index' do
-    ::ApplicationController.stub_any_instance(:_options, @options) do
+    ::Panicboat::AbstractController.stub_any_instance(:_options, @options) do
       get "/groups/#{groups(:spec).id}/roles"
     end
     assert_response :success
   end
 
   test 'Create' do
-    ::ApplicationController.stub_any_instance(:_options, @options) do
+    ::Panicboat::AbstractController.stub_any_instance(:_options, @options) do
       post "/groups/#{groups(:spec).id}/roles", params: { role_id: roles(:spec).id }
     end
     assert_response :success
   end
 
   test 'Destroy' do
-    ::ApplicationController.stub_any_instance(:_options, @options) do
+    ::Panicboat::AbstractController.stub_any_instance(:_options, @options) do
       delete "/groups/#{map_group_roles(:spec).group_id}/roles/#{map_group_roles(:spec).role_id}"
     end
     assert_response :success

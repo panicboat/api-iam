@@ -1,31 +1,5 @@
-class ApplicationController < Panicboat::ApplicationController
+class ApplicationController < Panicboat::AbstractController
   private
-
-  def _run_options(ctx)
-    ctx.merge!(_options)
-  end
-
-  def _options
-    headers = ::RequestHeader.new(request.headers)
-    {
-      headers: headers,
-      action: _action(request.controller_class.to_s.gsub(/Controller$/, '').singularize, request.path_parameters[:action]),
-      current_user: _session(headers),
-    }
-  end
-
-  def _action(controller, action)
-    name =  case action
-            when 'destroy' then "Delete#{controller.capitalize}"
-            when 'index' then "List#{controller.capitalize}"
-            when 'show' then "Get#{controller.capitalize}"
-            else "#{action.capitalize}#{controller.capitalize}"
-            end
-    actions = ::Action.joins(:service).where(services: { name: ENV['AWS_ECS_SERVICE_NAME'] }, actions: { name: name })
-    return nil if actions.blank?
-
-    actions[0].id
-  end
 
   def _session(headers)
     jwt = headers.authorization[::RequestHeader::USER_CLAIMS]

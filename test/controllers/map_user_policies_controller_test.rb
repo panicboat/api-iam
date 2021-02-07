@@ -13,21 +13,21 @@ class MapUserPoliciesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'Index' do
-    ::ApplicationController.stub_any_instance(:_options, @options) do
+    ::Panicboat::AbstractController.stub_any_instance(:_options, @options) do
       get "/users/#{users(:spec).id}/policies"
     end
     assert_response :success
   end
 
   test 'Create' do
-    ::ApplicationController.stub_any_instance(:_options, @options) do
+    ::Panicboat::AbstractController.stub_any_instance(:_options, @options) do
       post "/users/#{users(:spec).id}/policies", params: { policy_id: policies(:spec).id }
     end
     assert_response :success
   end
 
   test 'Destroy' do
-    ::ApplicationController.stub_any_instance(:_options, @options) do
+    ::Panicboat::AbstractController.stub_any_instance(:_options, @options) do
       delete "/users/#{map_user_policies(:spec).user_id}/policies/#{map_user_policies(:spec).policy_id}"
     end
     assert_response :success

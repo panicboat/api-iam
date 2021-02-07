@@ -13,21 +13,21 @@ class MapGroupUsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'Index' do
-    ::ApplicationController.stub_any_instance(:_options, @options) do
+    ::Panicboat::AbstractController.stub_any_instance(:_options, @options) do
       get "/groups/#{groups(:spec).id}/users"
     end
     assert_response :success
   end
 
   test 'Create' do
-    ::ApplicationController.stub_any_instance(:_options, @options) do
+    ::Panicboat::AbstractController.stub_any_instance(:_options, @options) do
       post "/groups/#{groups(:spec).id}/users", params: { user_id: users(:spec).id }
     end
     assert_response :success
   end
 
   test 'Destroy' do
-    ::ApplicationController.stub_any_instance(:_options, @options) do
+    ::Panicboat::AbstractController.stub_any_instance(:_options, @options) do
       delete "/groups/#{map_group_users(:spec).group_id}/users/#{map_group_users(:spec).user_id}"
     end
     assert_response :success

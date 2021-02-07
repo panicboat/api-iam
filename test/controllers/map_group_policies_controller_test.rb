@@ -13,21 +13,21 @@ class MapGroupPoliciesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'Index' do
-    ::ApplicationController.stub_any_instance(:_options, @options) do
+    ::Panicboat::AbstractController.stub_any_instance(:_options, @options) do
       get "/groups/#{groups(:spec).id}/policies"
     end
     assert_response :success
   end
 
   test 'Create' do
-    ::ApplicationController.stub_any_instance(:_options, @options) do
+    ::Panicboat::AbstractController.stub_any_instance(:_options, @options) do
       post "/groups/#{groups(:spec).id}/policies", params: { policy_id: policies(:spec).id }
     end
     assert_response :success
   end
 
   test 'Destroy' do
-    ::ApplicationController.stub_any_instance(:_options, @options) do
+    ::Panicboat::AbstractController.stub_any_instance(:_options, @options) do
       delete "/groups/#{map_group_policies(:spec).group_id}/policies/#{map_group_policies(:spec).policy_id}"
     end
     assert_response :success

@@ -13,35 +13,35 @@ class ActionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'Index' do
-    ::ApplicationController.stub_any_instance(:_options, @options) do
+    ::Panicboat::AbstractController.stub_any_instance(:_options, @options) do
       get "/services/#{actions(:read).service_id}/actions"
     end
     assert_response :success
   end
 
   test 'Show' do
-    ::ApplicationController.stub_any_instance(:_options, @options) do
+    ::Panicboat::AbstractController.stub_any_instance(:_options, @options) do
       get "/services/#{actions(:read).service_id}/actions/#{actions(:read).id}"
     end
     assert_response :success
   end
 
   test 'Create' do
-    ::ApplicationController.stub_any_instance(:_options, @options) do
+    ::Panicboat::AbstractController.stub_any_instance(:_options, @options) do
       post "/services/#{actions(:read).service_id}/actions", params: { name: 'spec', description: 'desc', access_level: 'list' }
     end
     assert_response :success
   end
 
   test 'Update' do
-    ::ApplicationController.stub_any_instance(:_options, @options) do
+    ::Panicboat::AbstractController.stub_any_instance(:_options, @options) do
       patch "/services/#{actions(:read).service_id}/actions/#{actions(:read).id}", params: { name: 'spec' }
     end
     assert_response :success
   end
 
   test 'Destroy' do
-    ::ApplicationController.stub_any_instance(:_options, @options) do
+    ::Panicboat::AbstractController.stub_any_instance(:_options, @options) do
       delete "/services/#{actions(:read).service_id}/actions/#{actions(:read).id}"
     end
     assert_response :success
